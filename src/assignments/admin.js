@@ -34,32 +34,34 @@ const assignmentsTableBody = document.getElementById('assignments-tbody');
  */
 function createAssignmentRow(assignment) {
   // ... your implementation here ...
-  const row = document.createElement('tr');
-  
-  const titleCell = document.createElement('td');
-  titleCell.textContent = assignment.title;
-  row.appendChild(titleCell);
-  
-  const dueDateCell = document.createElement('td');
-  dueDateCell.textContent = assignment.dueDate;
-  row.appendChild(dueDateCell);
-  
-  const actionsCell = document.createElement('td');
-  
-  const editButton = document.createElement('button');
-  editButton.textContent = 'Edit';
-  editButton.className = 'edit-btn';
-  editButton.setAttribute('data-id', assignment.id);
-  actionsCell.appendChild(editButton);
-  
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Delete';
-  deleteButton.className = 'delete-btn';
-  deleteButton.setAttribute('data-id', assignment.id);
-  actionsCell.appendChild(deleteButton);
-  
-  row.appendChild(actionsCell);
-  return row;
+  const tr = document.createElement("tr");
+
+  const titleTd = document.createElement("td");
+  titleTd.textContent = assignment.title;
+
+  const dueDateTd = document.createElement("td");
+  dueDateTd.textContent = assignment.dueDate;
+
+  const actionsTd = document.createElement("td");
+
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.classList.add("edit-btn");
+  editBtn.dataset.id = assignment.id;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.dataset.id = assignment.id;
+
+  actionsTd.appendChild(editBtn);
+  actionsTd.appendChild(deleteBtn);
+
+  tr.appendChild(titleTd);
+  tr.appendChild(dueDateTd);
+  tr.appendChild(actionsTd);
+
+  return tr;
 }
 
 /**
@@ -143,21 +145,17 @@ function handleTableClick(event) {
  */
 async function loadAndInitialize() {
   // ... your implementation here ...
-  try {
-    const response = await fetch('api/assignments.json');
-    if (!response.ok) throw new Error('Failed to load assignments data');
-    
+ try {
+    const response = await fetch("assignments.json");
     assignments = await response.json();
+
     renderTable();
-    assignmentForm.addEventListener('submit', handleAddAssignment);
-    assignmentsTableBody.addEventListener('click', handleTableClick);
+
+    assignmentForm.addEventListener("submit", handleAddAssignment);
+    assignmentsTableBody.addEventListener("click", handleTableClick);
+
   } catch (error) {
-    console.error('Error loading assignments:', error);
-    // Start with empty array if fetch fails
-    assignments = [];
-    renderTable();
-    assignmentForm.addEventListener('submit', handleAddAssignment);
-    assignmentsTableBody.addEventListener('click', handleTableClick);
+    console.error("Error loading assignments:", error);
   }
 }
 

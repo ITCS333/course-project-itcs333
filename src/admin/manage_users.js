@@ -136,8 +136,28 @@ function handleChangePassword(event) {
  */
 function handleAddStudent(event) {
   // ... your implementation here ...
-}
+  event.preventDefault();
 
+  const name = document.getElementById("student-name").value;
+  const id = document.getElementById("student-id").value;
+  const email = document.getElementById("student-email").value;
+
+  if (!name || !id || !email){
+    alert("Please fill out all required fields.");
+    return;
+  }
+  if (students.some(student => student.id === id)) {
+    alert("A student with this ID already exists.");
+    return;
+  }
+  const newStudent = { name, id, email };
+  students.push(newStudent);
+   renderTable(students);
+
+  document.getElementById("student-name").value = "";
+  document.getElementById("student-id").value = "";
+  document.getElementById("student-email").value = "";
+}
 /**
  * TODO: Implement the handleTableClick function.
  * This function will be an event listener on the `studentTableBody` (event delegation).

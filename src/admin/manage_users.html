@@ -17,20 +17,16 @@
         <title>Admin Portal</title>
     <!-- TODO: Link to a CSS file or a CSS framework. -->
          <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
-
     <!-- TODO: Create a 'header' element for the top of the page. -->
         <!-- TODO: Inside the header, add a main heading (e.g., 'h1') with the text "Admin Portal". -->
          <header>
             <h1>Admin Portal</h1>
          </header>
     <!-- End of the header. -->
-
     <!-- TODO: Create a 'main' element to hold the primary content of the portal. -->
      <main>
-
         <!-- Section 1: Password Management -->
          <section>
         <!-- TODO: Create a 'section' for the password management functionality. -->
@@ -59,7 +55,6 @@
                          - minlength="8"
                          - required -->
                          <input type="password" id="new-password" minlength="8" required>
-
                     <!-- TODO: Add a 'label' for the confirm password input. 'for' should be "confirm-password". -->
                      <label for="confirm-password">Confirm Password</label>
                     <!-- TODO: Add an 'input' to confirm the new password.
@@ -67,21 +62,17 @@
                          - id="confirm-password"
                          - required -->
                          <input type="password" id="confirm-password" required>
-
                     <!-- TODO: Add a 'button' to submit the form.
                          - type="submit"
                          - id="change"
                          - Text: "Update Password" -->
                          <button type="submit" id="change">Update Password</button>
-
                 <!-- End of the fieldset. -->
                  </fieldset>
             <!-- End of the password form. -->
              </form>
         <!-- End of the password management section. -->
          </section>
-
-
         <!-- Section 2: Student Management -->
         <!-- TODO: Create another 'section' for the student management functionality. -->
          <section>
@@ -92,7 +83,6 @@
              <details>
                 <!-- TODO: Add a 'summary' element inside 'details' with the text "Add New Student". -->
                  <summary>Add New Student</summary>
-
                 <!-- TODO: Create a 'form' for adding a new student. 'action' can be '#'. -->
                  <form action="#">
                     <!-- TODO: Use a 'fieldset' to group the new student fields. -->
@@ -114,7 +104,6 @@
                              - input: required -->
                              <label for="student-id">student's ID</label>
                              <input type="text" id="student-id" required>
-
                         <!-- TODO: Add a 'label' and 'input' for the student's email.
                              - label 'for': "student-email"
                              - input 'id': "student-email"
@@ -130,21 +119,17 @@
                              - You can pre-fill this with a value like "password123" or leave it blank. -->
                              <label for="default-password">default password</label>
                              <input type="text" id="default-password" value="password123">
-
                         <!-- TODO: Add a 'button' to submit the form.
                              - type="submit"
                              - id="add"
                              - Text: "Add Student" -->
                              <button type="submit" id="add">Add Student</button>
-
                     <!-- End of the fieldset. -->
                      </fieldset>
                 <!-- End of the add student form. -->
                  </form>
             <!-- End of the 'details' element. -->
              </details>
-
-
             <!-- Subsection 2.2: Student List -->
             <!-- TODO: Add a sub-heading (e.g., 'h3') for the list of students, "Registered Students". -->
                <h3>Registered Students</h3>
@@ -183,7 +168,6 @@
                          </td>
                     <!-- End of the student row. -->
                      </tr>
-
                     <!-- TODO: Add another 'tr' for a second student as another example. -->
                      <tr>
                        <td>Ali Salim</td>
@@ -198,12 +182,9 @@
                  </tbody>
             <!-- End of the table. -->
              </table>
-
         <!-- End of the student management section. -->
          </section>
-
     <!-- End of the main content area. -->
      </main>
-
 </body>
 </html>

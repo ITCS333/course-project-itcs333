@@ -81,8 +81,17 @@ function createStudentRow(student) {
  */
 function renderTable(studentArray) {
   // ... your implementation here ...
-}
+    studentTableBody.innerHTML = "";
 
+    for (let i = 0; i < studentArray.length; i++) {
+    const student = studentArray[i];
+
+     const row = createStudentRow(student);
+
+     studentTableBody.appendChild(row);
+    }
+
+}
 /**
  * TODO: Implement the handleChangePassword function.
  * This function will be called when the "Update Password" button is clicked.

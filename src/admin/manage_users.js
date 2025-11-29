@@ -18,17 +18,21 @@ let students = [];
 // the HTML document is parsed before this script runs.
 
 // TODO: Select the student table body (tbody).
-
+const studentTableBody = document.querySelector("tbody");
 // TODO: Select the "Add Student" form.
 // (You'll need to add id="add-student-form" to this form in your HTML).
+const addStudentForm = document.getElementById("add-student-form");
 
 // TODO: Select the "Change Password" form.
 // (You'll need to add id="password-form" to this form in your HTML).
+const changePasswordForm = document.getElementById("password-form");
 
 // TODO: Select the search input field.
 // (You'll need to add id="search-input" to this input in your HTML).
+const searchInput = document.getElementById("search-input");
 
 // TODO: Select all table header (th) elements in thead.
+const tableHeaders = document.querySelectorAll("thead th");
 
 // --- Functions ---
 
@@ -45,15 +49,35 @@ let students = [];
  */
 function createStudentRow(student) {
   // ... your implementation here ...
+  const tr = document.createElement("tr");
+  
+  const nameTd = document.createElement("td");
+  nameTd.textContent = student.name;
+  tr.appendChild(nameTd);
+
+  const idTd =document.createElement("td");
+  idTd.textContent=student.id;
+  tr.appendChild(idTd);
+
+  const emailTd=document.createElement("td");
+  emailTd.textContent=student.email;
+  tr.appendChild(emailTd);
+
+  const actionsTd = document.createElement("td");
+  const editBtn = document.createElement("button");
+  editBtn.textContent="Edit";
+  editBtn.classList.add("edit-btn");
+  actionsTd.appendChild(editBtn);
+
+  const deleteBtn=document.createElement("button");
+  deleteBtn.textContent="Delete";
+  deleteBtn.classList.add("delete-btn");
+  actionsTd.appendChild(deleteBtn);
+  
+  tr.appendChild(actionsTd);
+  return tr;
 }
 
-/**
- * TODO: Implement the renderTable function.
- * This function takes an array of student objects.
- * It should:
- * 1. Clear the current content of the `studentTableBody`.
- * 2. Loop through the provided array of students.
- * 3. For each student, call `createStudentRow` and append the returned <tr> to `studentTableBody`.
  */
 function renderTable(studentArray) {
   // ... your implementation here ...

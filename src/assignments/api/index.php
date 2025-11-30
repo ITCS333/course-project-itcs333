@@ -614,21 +614,19 @@ sendResponse(["error" => "Database error: " . $e->getMessage()], 500);
  */
 function sendResponse($data, $statusCode = 200) {
     // TODO: Set HTTP response code
-    
-    
+      http_response_code($statusCode);
     // TODO: Ensure data is an array
-    
+     if (!is_array($data)) {
+        $data = ["data" => $data];
+    }
     
     // TODO: Echo JSON encoded data
-    
+    header("Content-Type: application/json; charset=UTF-8");
     
     // TODO: Exit to prevent further execution
-     http_response_code($statusCode);
-    echo json_encode($data);
-    exit();
+    echo json_encode($data, JSON_PRETTY_PRINT);
+      exit();
 }
-
-
 /**
  * Helper function to sanitize string input
  * 
@@ -637,20 +635,14 @@ function sendResponse($data, $statusCode = 200) {
  */
 function sanitizeInput($data) {
     // TODO: Trim whitespace from beginning and end
-    
-    
+    $data = trim($data);
     // TODO: Remove HTML and PHP tags
-    
-    
+     $data = strip_tags($data);
     // TODO: Convert special characters to HTML entities
-    
-    
+     $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');   
     // TODO: Return the sanitized data
-        return htmlspecialchars(strip_tags(trim($data)));
-
+      return $data;
 }
-
-
 /**
  * Helper function to validate date format (YYYY-MM-DD)
  * 
@@ -659,14 +651,14 @@ function sanitizeInput($data) {
  */
 function validateDate($date) {
     // TODO: Use DateTime::createFromFormat to validate
-    
-    
-    // TODO: Return true if valid, false otherwise
+      if (empty($date) || !is_string($date)) {
+        return false;
+    }
+    // Use DateTime::createFromFormat to validate
     $d = DateTime::createFromFormat("Y-m-d", $date);
-    return $d && $d->format("Y-m-d") === $date;
+    // TODO: Return true if valid, false otherwise
+  return $d && $d->format("Y-m-d") === $date;
 }
-
-
 /**
  * Helper function to validate allowed values (for sort fields, order, etc.)
  * 
@@ -676,11 +668,10 @@ function validateDate($date) {
  */
 function validateAllowedValue($value, $allowedValues) {
     // TODO: Check if $value exists in $allowedValues array
-    
-    
+     if (!is_array($allowedValues)) {
+        return false;
+    }
     // TODO: Return the result
-        return in_array($value, $allowedValues);
-
+   return in_array($value, $allowedValues, true);
 }
-
 ?>

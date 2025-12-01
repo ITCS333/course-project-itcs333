@@ -29,30 +29,35 @@
 // Allow cross-origin requests (CORS) if needed
 // Allow specific HTTP methods (GET, POST, PUT, DELETE, OPTIONS)
 // Allow specific headers (Content-Type, Authorization)
-
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 // TODO: Handle preflight OPTIONS request
 // If the request method is OPTIONS, return 200 status and exit
-
-
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 // TODO: Include the database connection class
 // Assume the Database class has a method getConnection() that returns a PDO instance
-
+require_once 'Database.php';
 
 // TODO: Get the PDO database connection
-
+$db = (new Database())->getConnection();
 
 // TODO: Get the HTTP request method
 // Use $_SERVER['REQUEST_METHOD']
-
+$method = $_SERVER['REQUEST_METHOD'];
 
 // TODO: Get the request body for POST and PUT requests
 // Use file_get_contents('php://input') to get raw POST data
 // Decode JSON data using json_decode()
-
+$requestData = json_decode(file_get_contents('php://input'), true);
 
 // TODO: Parse query parameters for filtering and searching
-
+$queryParams = $_GET;
 
 /**
  * Function: Get all students or search for specific students
@@ -67,22 +72,38 @@ function getStudents($db) {
     // TODO: Check if search parameter exists
     // If yes, prepare SQL query with WHERE clause using LIKE
     // Search should work on name, student_id, and email fields
-    
+    $sql = "SELECT id, student_id, name, email, created_at FROM students";
+    $conditions = [];
+    $params = [];
+    if (!empty($queryParams['search'])) {
+        $conditions[] = "(name LIKE :search OR student_id LIKE :search OR email LIKE :search)";
+        $params[':search'] = "%{$queryParams['search']}%";
+    }
+
+    if ($conditions) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
     // TODO: Check if sort and order parameters exist
     // If yes, add ORDER BY clause to the query
     // Validate sort field to prevent SQL injection (only allow: name, student_id, email)
     // Validate order to prevent SQL injection (only allow: asc, desc)
-    
+    $allowedSort = ['name', 'student_id', 'email'];
+    $sort = in_array($queryParams['sort'] ?? '', $allowedSort) ? $queryParams['sort'] : 'id';
+    $order = ($queryParams['order'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
+    $sql .= " ORDER BY $sort $order";
     // TODO: Prepare the SQL query using PDO
     // Note: Do NOT select the password field
-    
+    $stmt = $db->prepare($sql);
     // TODO: Bind parameters if using search
-    
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
     // TODO: Execute the query
-    
+    $stmt->execute();
     // TODO: Fetch all results as an associative array
-    
+    $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // TODO: Return JSON response with success status and data
+     sendResponse(['success' => true, 'data' => $students]);
 }
 
 
@@ -95,16 +116,21 @@ function getStudents($db) {
  */
 function getStudentById($db, $studentId) {
     // TODO: Prepare SQL query to select student by student_id
-    
+     $stmt = $db->prepare("SELECT id, student_id, name, email, created_at FROM students WHERE student_id = :student_id");
     // TODO: Bind the student_id parameter
-    
+     $stmt->bindParam(':student_id', $studentId);
     // TODO: Execute the query
-    
+     $stmt->execute();
     // TODO: Fetch the result
-    
+    $student = $stmt->fetch(PDO::FETCH_ASSOC);
     // TODO: Check if student exists
-    // If yes, return success response with student data
-    // If no, return error response with 404 status
+    if ($student) {
+        // If yes, return success response with student data
+        sendResponse(['success' => true, 'data' => $student]);
+    } else {
+        // If no, return error response with 404 status
+        sendResponse(['success' => false, 'message' => 'Student not found'], 404);
+    }
 }
 
 
@@ -122,31 +148,47 @@ function createStudent($db, $data) {
     // TODO: Validate required fields
     // Check if student_id, name, email, and password are provided
     // If any field is missing, return error response with 400 status
-    
+    $required = ['student_id', 'name', 'email', 'password'];
+    foreach ($required as $field) {
+        if (empty($data[$field])) sendResponse(['success' => false, 'message' => "$field is required"], 400);
+    }
     // TODO: Sanitize input data
     // Trim whitespace from all fields
     // Validate email format using filter_var()
-    
+    $student_id = sanitizeInput($data['student_id']);
+    $name = sanitizeInput($data['name']);
+    $email = sanitizeInput($data['email']);
+    $password = $data['password'];
+
+    if (!validateEmail($email)) sendResponse(['success' => false, 'message' => "Invalid email"], 400);
     // TODO: Check if student_id or email already exists
     // Prepare and execute a SELECT query to check for duplicates
     // If duplicate found, return error response with 409 status (Conflict)
-    
+    $check = $db->prepare("SELECT * FROM students WHERE student_id = :student_id OR email = :email");
+    $check->execute([':student_id' => $student_id, ':email' => $email]);
+    if ($check->fetch()) sendResponse(['success' => false, 'message' => "Student ID or Email already exists"], 409);
     // TODO: Hash the password
     // Use password_hash() with PASSWORD_DEFAULT
-    
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     // TODO: Prepare INSERT query
-    
+     $stmt = $db->prepare("INSERT INTO students (student_id, name, email, password, created_at) VALUES (:student_id, :name, :email, :password, NOW())");
     // TODO: Bind parameters
     // Bind student_id, name, email, and hashed password
-    
+    $stmt->bindParam(':student_id', $student_id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $hashedPassword);
     // TODO: Execute the query
-    
+      $success = $stmt->execute();
     // TODO: Check if insert was successful
     // If yes, return success response with 201 status (Created)
     // If no, return error response with 500 status
+        if ($success) {
+        sendResponse(['success' => true, 'message' => 'Student created successfully'], 201);
+    } else {
+        sendResponse(['success' => false, 'message' => 'Failed to create student'], 500);
+    }
 }
-
-
 /**
  * Function: Update an existing student
  * Method: PUT

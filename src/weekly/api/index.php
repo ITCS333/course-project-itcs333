@@ -60,9 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Example: require_once '../config/Database.php';
 
 
+
 // TODO: Get the PDO database connection
 // Example: $database = new Database();
 //          $db = $database->getConnection();
+require_once '../config/Database.php';
 
 
 // TODO: Get the HTTP request method

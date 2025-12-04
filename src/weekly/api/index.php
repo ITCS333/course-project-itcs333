@@ -69,6 +69,8 @@ require_once '../config/Database.php';
 
 // TODO: Get the HTTP request method
 // Use $_SERVER['REQUEST_METHOD']
+$database = new Database();
+$db       = $database->getConnection();
 
 
 // TODO: Get the request body for POST and PUT requests

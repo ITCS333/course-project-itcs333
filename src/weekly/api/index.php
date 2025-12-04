@@ -76,8 +76,11 @@ $db       = $database->getConnection();
 // TODO: Get the request body for POST and PUT requests
 // Use file_get_contents('php://input') to get raw POST data
 // Decode JSON data using json_decode()
-
-
+$rawInput = file_get_contents('php://input');
+$body   = json_decode($rawInput,true);
+if(!is_array($body)){
+    $body = [];
+}
 // TODO: Parse query parameters
 // Get the 'resource' parameter to determine if request is for weeks or comments
 // Example: ?resource=weeks or ?resource=comments

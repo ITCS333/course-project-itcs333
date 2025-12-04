@@ -49,6 +49,10 @@ header('Allow: GET, POST, PUT, DELETE, OPTIONS');
 
 // TODO: Handle preflight OPTIONS request
 // If the request method is OPTIONS, return 200 status and exit
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 
 // TODO: Include the database connection class

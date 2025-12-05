@@ -418,7 +418,7 @@ function updateWeek($db, $data) {
             'success' =>true,
             'data'    =>$week
             
-        ],200)
+        ],200);
     }else{
         sendError('falied to update week ',500);
     }
@@ -559,7 +559,7 @@ function createComment($db, $data) {
     $checkStmt->execute();
     // If week not found, return error response with 404 status
     if(!$checkStmt->fetch(PDO::FETCH_ASSOC)){
-        sendError('week not found',404)
+        sendError('week not found',404);
     }
     // TODO: Prepare INSERT query
     // INSERT INTO comments (week_id, author, text) VALUES (?, ?, ?)
@@ -590,7 +590,7 @@ function createComment($db, $data) {
         ],201);
 
     }else{
-        sendError('faild to create comment ',500)
+        sendError('faild to create comment ',500);
     }
 }
 
@@ -634,9 +634,9 @@ function deleteComment($db, $commentId) {
         sendResponse([
             'success' =>true,
             'message' =>'Comment deleted successfully'
-        ],200)
+        ],200);
     }else{
-        sendError('failed to deleted comment',500)
+        sendError('failed to deleted comment',500);
     }
 }
 
@@ -652,7 +652,7 @@ try {
     
     
     // Route based on resource type and HTTP method
-    $method = $_SERVER['REQUEST_METHOD']
+    $method = $_SERVER['REQUEST_METHOD'];
     // ========== WEEKS ROUTES ==========
     if ($resource === 'weeks') {
         

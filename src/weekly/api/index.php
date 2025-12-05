@@ -148,6 +148,7 @@ function getAllWeeks($db) {
         $stmt->bindValue($key, $value, PDO::PARAM_STR);
     }
     // TODO: Execute the query
+    $stmt->execute();
     
     // TODO: Fetch all results as an associative array
     

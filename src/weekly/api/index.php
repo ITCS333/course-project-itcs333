@@ -543,6 +543,9 @@ function createComment($db, $data) {
     
     // TODO: Sanitize input data
     // Trim whitespace from all fields
+    $weekId = sanitizeInput($data['week_id']);
+    $author = sanitizeInput($data['author']);
+    $text   = trim($data['text']);
     
     // TODO: Validate that text is not empty after trimming
     // If empty, return error response with 400 status

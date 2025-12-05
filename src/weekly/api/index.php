@@ -190,9 +190,10 @@ function getWeekById($db, $weekId) {
     
     // TODO: Prepare SQL query to select week by week_id
     // SELECT week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = ?
-    $sql = "week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = :week_id "
+    $sql = "week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = :week_id ";
+    $stmt =$db->prepare($sql);
     // TODO: Bind the week_id parameter
-    
+
     // TODO: Execute the query
     
     // TODO: Fetch the result

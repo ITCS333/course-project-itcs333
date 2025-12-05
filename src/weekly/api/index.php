@@ -631,6 +631,14 @@ function deleteComment($db, $commentId) {
     // TODO: Check if delete was successful
     // If yes, return success response
     // If no, return error response with 500 status
+    if ($stmt->rowCount() > 0) {
+        sendResponse([
+            'success' =>true,
+            'message' =>'Comment deleted successfully'
+        ],200)
+    }else{
+        sendError('failed to deleted comment',500)
+    }
 }
 
 

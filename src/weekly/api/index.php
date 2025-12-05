@@ -808,12 +808,13 @@ function validateDate($date) {
  */
 function sanitizeInput($data) {
     // TODO: Trim whitespace
-    
+    $data = trim($data);
     // TODO: Strip HTML tags using strip_tags()
-    
+    $data = strip_tags($data);
     // TODO: Convert special characters using htmlspecialchars()
-    
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     // TODO: Return sanitized data
+    return $data;
 }
 
 

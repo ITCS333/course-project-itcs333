@@ -261,7 +261,7 @@ function createWeek($db, $data) {
     // TODO: Check if week_id already exists
     // Prepare and execute a SELECT query to check for duplicates
     // If duplicate found, return error response with 409 status (Conflict)
-    $checksql ="Select ID from weeks whare week_id = week_id LIMIT 1";
+    $checksql ="SELECT ID from weeks WHERE week_id = week_id LIMIT 1";
     $checkstmt = $db->prepare($checksql);
     $checkstmt->bindValue(':week_id',$weekId, PDO::PARM_STR);
     $checkstmt->execute();
@@ -331,11 +331,20 @@ function updateWeek($db, $data) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
     if(empty($data['week_id'])){
-        sendError('week_id is required',400)
+        sendError('week_id is required',400);
     }
+    $weekId =sanitizeInput($data['week_id']);
     // TODO: Check if week exists
     // Prepare and execute a SELECT query to find the week
     // If not found, return error response with 404 status
+    $checkSql  = "SELECT week_id FROM weeks WHERE week_id = :week_id LIMIT 1";
+    $checkStmt = $db->prepare($checkSql);
+    $checkStmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+    $checkStmt->execute();
+
+    if (!$checkStmt->fetch(PDO::FETCH_ASSOC)) {
+        sendError('Week not found', 404);
+    }
     
     // TODO: Build UPDATE query dynamically based on provided fields
     // Initialize an array to hold SET clauses

@@ -406,7 +406,24 @@ function updateWeek($db, $data) {
      $result   = $stmt->execute($values);
     // TODO: Check if update was successful
     // If yes, return success response with updated week data
+    if ($result){
+        $selectSql  = "SELECT week_id, title, start_date, description, links, created_at, updated_at
+        FROM weeks WHERE week_id = :week_id";
+        $selectStmt = $db->prepare($selectSql);
+        $selectStmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+        $selectStmt->execute();
+        $week = $selectStmt->fetch(PDO::FETCH_ASSOC);
+
+        sendResponse([
+            'success' =>true,
+            'data'    =$week
+            
+        ],200)
+    }else{
+        sendError('falied to update week ',500)
+    }
     // If no, return error response with 500 status
+
 }
 
 

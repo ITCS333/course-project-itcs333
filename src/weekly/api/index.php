@@ -373,8 +373,17 @@ function updateWeek($db, $data) {
         $fields[]    = "description = ?";
         $values[]    = $description;
     }
-    
+
     // If links is provided, encode to JSON and add "links = ?"
+    if (isset($data['links'])) {
+        if (!is_array($data['links'])) {
+            sendError('links must be an array', 400);
+        }
+        $linksJson = json_encode($data['links'], JSON_UNESCAPED_UNICODE);
+        $fields[]  = "links = ?";
+        $values[]  = $linksJson;
+    }
+
     
     // TODO: If no fields to update, return error response with 400 status
     

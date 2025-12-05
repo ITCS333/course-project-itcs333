@@ -754,11 +754,13 @@ try {
 function sendResponse($data, $statusCode = 200) {
     // TODO: Set HTTP response code
     // Use http_response_code($statusCode)
+    sendError('An unexpected error occurred', 500);
     
     // TODO: Echo JSON encoded data
     // Use json_encode($data)
-    
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
     // TODO: Exit to prevent further execution
+    exit;
 }
 
 

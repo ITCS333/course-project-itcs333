@@ -567,7 +567,9 @@ function createComment($db, $data) {
     $sql  = "INSERT INTO comments (week_id, author, text) VALUES (:week_id, :author, :text)";
     
     // TODO: Bind parameters
-    
+    $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+    $stmt->bindValue(':author', $author, PDO::PARAM_STR);
+    $stmt->bindValue(':text', $text, PDO::PARAM_STR)
     // TODO: Execute the query
     
     // TODO: Check if insert was successful

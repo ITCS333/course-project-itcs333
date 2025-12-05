@@ -116,6 +116,10 @@ function getAllWeeks($db) {
     // TODO: Check if search parameter exists
     // If yes, add WHERE clause using LIKE for title and description
     // Example: WHERE title LIKE ? OR description LIKE ?
+    if(!empty($search)){
+        $sql .= " WHERE title LIKE :search OR description LIKE :search";
+        $params[':search'] = '%' . $search . '%';
+    }
     
     // TODO: Check if sort parameter exists
     // Validate sort field to prevent SQL injection (only allow: title, start_date, created_at)

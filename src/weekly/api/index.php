@@ -717,16 +717,20 @@ try {
         // TODO: Return error for invalid resource
         // Set HTTP status to 400 (Bad Request)
         // Return JSON error message: "Invalid resource. Use 'weeks' or 'comments'"
+        sendError("Invalid resource. Use 'weeks' or 'comments'", 400);
     }
     
 } catch (PDOException $e) {
     // TODO: Handle database errors
     // Log the error message (optional, for debugging)
     // error_log($e->getMessage());
+    error_log($e->getMessage());
     
     // TODO: Return generic error response with 500 status
     // Do NOT expose database error details to the client
     // Return message: "Database error occurred"
+    sendError('Database error occurred', 500);
+
     
 } catch (Exception $e) {
     // TODO: Handle general errors

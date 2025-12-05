@@ -506,14 +506,12 @@ function getCommentsByWeek($db, $weekId) {
 
     // TODO: Prepare SQL query to select comments for the week
     // SELECT id, week_id, author, text, created_at FROM comments WHERE week_id = ? ORDER BY created_at ASC
-    $sql  = "SELECT id, week_id, author, text, created_at 
-             FROM comments 
-             WHERE week_id = :week_id 
-             ORDER BY created_at ASC";
+    $sql  = "SELECT id, week_id, author, text, created_at FROM comments WHERE week_id = :week_id ORDER BY created_at ASC";
+    $stmt = $db->prepare($sql);
     // TODO: Bind the week_id parameter
-    
+    $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Execute the query
-    
+
     // TODO: Fetch all results as an associative array
     
     // TODO: Return JSON response with success status and data

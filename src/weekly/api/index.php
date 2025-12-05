@@ -661,6 +661,12 @@ try {
             // TODO: Check if week_id is provided in query parameters
             // If yes, call getWeekById()
             // If no, call getAllWeeks() to get all weeks (with optional search/sort)
+            $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : null;
+            if(!empty($weekId)){
+                getWeekById($db, $weekId);
+            } else {
+                getAllWeeks($db);
+            }
             
         } elseif ($method === 'POST') {
             // TODO: Call createWeek() with the decoded request body

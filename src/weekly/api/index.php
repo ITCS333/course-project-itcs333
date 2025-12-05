@@ -735,7 +735,9 @@ try {
 } catch (Exception $e) {
     // TODO: Handle general errors
     // Log the error message (optional)
+    error_log($e->getMessage());
     // Return error response with 500 status
+    sendError('An unexpected error occurred', 500);
 }
 
 

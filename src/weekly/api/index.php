@@ -246,6 +246,11 @@ function createWeek($db, $data) {
     
     // TODO: Sanitize input data
     // Trim whitespace from title, description, and week_id
+    $weekId      = sanitizeInput($data['week_id']);
+    $title       = sanitizeInput($data['title']);
+    $startDate   = trim($data['start_date']);
+    $description = sanitizeInput($data['description']);
+
     
     // TODO: Validate start_date format
     // Use a regex or DateTime::createFromFormat() to verify YYYY-MM-DD format

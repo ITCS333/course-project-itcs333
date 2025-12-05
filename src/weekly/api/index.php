@@ -104,7 +104,7 @@ $resource = isset($_GET['resource']) ? strtolower(trim($_GET['resource'])) : 'we
 function getAllWeeks($db) {
     // TODO: Initialize variables for search, sort, and order from query parameters
     $search =isset($_GET['search']) ? trim($_GET['search']) : null ;
-    $sort =isset($_GET['sort']) ? trim ($_GET['sort']) : 'start_data';
+    $sort =isset($_GET['sort']) ? trim ($_GET['sort']) : 'start_date';
     $order =isset($_GET['order']) ? trim ($_GET['order']) : 'asc'
     
     // TODO: Start building the SQL query
@@ -124,7 +124,7 @@ function getAllWeeks($db) {
     // TODO: Check if sort parameter exists
     // Validate sort field to prevent SQL injection (only allow: title, start_date, created_at)
     // If invalid, use default sort field (start_date)
-    $allowedFields = ['title ', 'start_date' ,'created_at'] ;
+    $allowedFields = ['title', 'start_date' ,'created_at'] ;
     if(!isValidSortField($sort , $allowedFields)){
         $sort = 'start_date';
     }
@@ -203,7 +203,7 @@ function getWeekById($db, $weekId) {
     // If no, return error response with 404 status
     if($week){
         if(!empty($week['links'])){
-            $decoded =json_decode(['link'], true);
+            $decoded =json_decode($week['link'], true);
             $week['links']=is_array($decoded) ? $decoded : [] ;
         }else{
             $week['links']=[];
@@ -212,7 +212,7 @@ function getWeekById($db, $weekId) {
         sendResponse([
             'success' => true,
             'data' => $week
-        ],200)
+        ],200);
     }else{
         sendError('week not found',404);
     }
@@ -263,7 +263,7 @@ function createWeek($db, $data) {
     // If duplicate found, return error response with 409 status (Conflict)
     $checksql ="SELECT id FROM weeks WHERE week_id = :week_id LIMIT 1";
     $checkstmt = $db->prepare($checksql);
-    $checkstmt->bindValue(':week_id',$weekId, PDO::PARM_STR);
+    $checkstmt->bindValue(':week_id',$weekId, PDO::PARAM_STR);
     $checkstmt->execute();
 
     if($checkstmt->fetch(PDO::FETCH_ASSOC)){
@@ -307,7 +307,7 @@ function createWeek($db, $data) {
         ];
         sendResponse([
             'success' => true,
-            'data'    => $responseData
+            'data'    => $responsedata
         ],201)
     }else{
         sendResponse("faild to creat week",500)
@@ -676,7 +676,8 @@ try {
         } elseif ($method === 'DELETE') {
             // TODO: Get week_id from query parameter or request body
             // Call deleteWeek()
-            $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : ($body['week_id'] ?? null);
+            $weekId = $_GET['week_id'] ?? ($body['week_id'] ?? null);
+            $weekId = trim($weekId);
             deleteWeek($db, $weekId);
         } else {
             // TODO: Return error for unsupported methods

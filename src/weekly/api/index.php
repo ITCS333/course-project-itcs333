@@ -549,7 +549,9 @@ function createComment($db, $data) {
     
     // TODO: Validate that text is not empty after trimming
     // If empty, return error response with 400 status
-    
+    if($text===''){
+        sendError('text cannot be empty', 400);
+    }
     // TODO: Check if the week exists
     // Prepare and execute a SELECT query on weeks table
     // If week not found, return error response with 404 status

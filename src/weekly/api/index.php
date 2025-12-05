@@ -692,6 +692,8 @@ try {
         if ($method === 'GET') {
             // TODO: Get week_id from query parameters
             // Call getCommentsByWeek()
+            $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : null;
+            getCommentsByWeek($db, $weekId);
             
         } elseif ($method === 'POST') {
             // TODO: Call createComment() with the decoded request body

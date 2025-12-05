@@ -184,10 +184,13 @@ function getAllWeeks($db) {
 function getWeekById($db, $weekId) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
+    if(empty($weekId)){
+        sendError("Validate that week_id is provided",400);
+    }
     
     // TODO: Prepare SQL query to select week by week_id
     // SELECT week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = ?
-    
+    $sql = "week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = :week_id "
     // TODO: Bind the week_id parameter
     
     // TODO: Execute the query

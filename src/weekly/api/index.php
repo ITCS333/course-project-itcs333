@@ -500,7 +500,10 @@ function deleteWeek($db, $weekId) {
 function getCommentsByWeek($db, $weekId) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
-    
+    if (empty($weekId)) {
+        sendError('week_id is required', 400);
+    }
+
     // TODO: Prepare SQL query to select comments for the week
     // SELECT id, week_id, author, text, created_at FROM comments WHERE week_id = ? ORDER BY created_at ASC
     

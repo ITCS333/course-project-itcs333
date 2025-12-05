@@ -576,6 +576,23 @@ function createComment($db, $data) {
     // If yes, get the last insert ID and return success response with 201 status
     // Include the new comment data in the response
     // If no, return error response with 500 status
+    if($result){
+        $commentId = $db->lastInsertId();
+
+        $selectSql = "SELECT id, week_id, author, text, created_at FROM comments WHERE id = :id";
+        $selectStmt = $db->prepare($selectSql);
+        $selectStmt->bindValue(':id', $commentId, PDO::PARAM_INT);
+        $selectStmt->execute();
+        $comment = $selectStmt->fetch(PDO::FETCH_ASSOC);
+        
+        sendResponse([
+            'success' =>true,
+            'data'    =>$comment
+        ],201)
+
+    }else{
+        sendError('faild to create comment ',500)
+    }
 }
 
 

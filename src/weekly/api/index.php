@@ -677,7 +677,8 @@ try {
         } elseif ($method === 'DELETE') {
             // TODO: Get week_id from query parameter or request body
             // Call deleteWeek()
-            
+            $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : ($body['week_id'] ?? null);
+            deleteWeek($db, $weekId);
         } else {
             // TODO: Return error for unsupported methods
             // Set HTTP status to 405 (Method Not Allowed)

@@ -773,8 +773,14 @@ function sendResponse($data, $statusCode = 200) {
 function sendError($message, $statusCode = 400) {
     // TODO: Create error response array
     // Structure: ['success' => false, 'error' => $message]
+    $error = [
+        'success' => false,
+        'error'   => $message
+    ];
     
     // TODO: Call sendResponse() with the error array and status code
+     sendResponse($error, $statusCode);
+
 }
 
 

@@ -261,11 +261,23 @@ function createWeek($db, $data) {
     // TODO: Check if week_id already exists
     // Prepare and execute a SELECT query to check for duplicates
     // If duplicate found, return error response with 409 status (Conflict)
-    
+    $checksql ="Select ID from weeks whare week_id = week_id LIMIT 1";
+    $checkstmt = $db->prepare($checksql);
+    $checkstmt->bindValue(':week_id',$weekId, PDO::PARM_STR);
+    $checkstmt->execute();
+
+    if($checkstmt->fetch(PDO::FETCH_ASSOC)){
+        sendError('week ID already exists', 409)
+    }
+
     
     // TODO: Handle links array
     // If links is provided and is an array, encode it to JSON using json_encode()
     // If links is not provided, use an empty array []
+    if(isset($data['links']) && is_array($data['links'])){
+        $linksJson = json_encode([], JSON_UNESCAPED_UNICODE);
+    }
+    
     
     // TODO: Prepare INSERT query
     // INSERT INTO weeks (week_id, title, start_date, description, links) VALUES (?, ?, ?, ?, ?)

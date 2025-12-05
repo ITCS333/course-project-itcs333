@@ -386,7 +386,10 @@ function updateWeek($db, $data) {
 
     
     // TODO: If no fields to update, return error response with 400 status
-    
+     if (empty($fields)) {
+        sendError('No fields provided to update', 400);
+    }
+
     // TODO: Add updated_at timestamp to SET clauses
     // Add "updated_at = CURRENT_TIMESTAMP"
     

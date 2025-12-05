@@ -105,7 +105,7 @@ function getAllWeeks($db) {
     // TODO: Initialize variables for search, sort, and order from query parameters
     $search =isset($_GET['search']) ? trim($_GET['search']) : null ;
     $sort =isset($_GET['sort']) ? trim ($_GET['sort']) : 'start_date';
-    $order =isset($_GET['order']) ? trim ($_GET['order']) : 'asc'
+    $order =isset($_GET['order']) ? trim ($_GET['order']) : 'asc';
     
     // TODO: Start building the SQL query
     // Base query: SELECT week_id, title, start_date, description, links, created_at FROM weeks
@@ -203,7 +203,7 @@ function getWeekById($db, $weekId) {
     // If no, return error response with 404 status
     if($week){
         if(!empty($week['links'])){
-            $decoded =json_decode($week['link'], true);
+            $decoded =json_decode($week['links'], true);
             $week['links']=is_array($decoded) ? $decoded : [] ;
         }else{
             $week['links']=[];
@@ -299,18 +299,18 @@ function createWeek($db, $data) {
     // If no, return error response with 500 status
     if($result){
         $responsedata =[
-            'week_id'   =>$weekId
-            'title'     =>$title
-            'start_data' =>$startDate
-            'description' =>$description
-            'links'     =>json_decode($linksJson,true)
+            'week_id'   =>$weekId,
+            'title'     =>$title,
+            'start_data' =>$startDate,
+            'description' =>$description,
+            'links'     =>json_decode($linksJson,true),
         ];
         sendResponse([
             'success' => true,
             'data'    => $responsedata
-        ],201)
+        ],201);
     }else{
-        sendResponse("faild to creat week",500)
+        sendResponse("faild to creat week",500);
     }
 }
 
@@ -587,7 +587,7 @@ function createComment($db, $data) {
         sendResponse([
             'success' =>true,
             'data'    =>$comment
-        ],201)
+        ],201);
 
     }else{
         sendError('faild to create comment ',500)
@@ -652,7 +652,7 @@ try {
     
     
     // Route based on resource type and HTTP method
-    
+    $method = $_SERVER['REQUEST_METHOD']
     // ========== WEEKS ROUTES ==========
     if ($resource === 'weeks') {
         

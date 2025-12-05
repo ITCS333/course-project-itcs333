@@ -617,7 +617,9 @@ function deleteComment($db, $commentId) {
     $checkStmt->bindValue(':id', $commentId, PDO::PARAM_INT);
     $checkStmt->execute();
     // If not found, return error response with 404 status
-    
+    if (!$checkStmt->fetch(PDO::FETCH_ASSOC)) {
+        sendError('Comment not found', 404);
+    }
     // TODO: Prepare DELETE query
     // DELETE FROM comments WHERE id = ?
     

@@ -416,7 +416,7 @@ function updateWeek($db, $data) {
 
         sendResponse([
             'success' =>true,
-            'data'    =$week
+            'data'    =>$week
             
         ],200)
     }else{

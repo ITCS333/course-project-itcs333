@@ -166,7 +166,10 @@ function getAllWeeks($db) {
     
     // TODO: Return JSON response with success status and data
     // Use sendResponse() helper function
-    
+    sendResponse([
+        'success' => true,
+        'data'=> $weeks
+    ], 200);
 }
 
 

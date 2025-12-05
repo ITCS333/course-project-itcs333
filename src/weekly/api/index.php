@@ -401,9 +401,9 @@ function updateWeek($db, $data) {
     // TODO: Bind parameters dynamically
     // Bind values array and then bind week_id at the end
     $values[] = $weekId;
-    $result   = $stmt->execute($values);
+
     // TODO: Execute the query
-    
+     $result   = $stmt->execute($values);
     // TODO: Check if update was successful
     // If yes, return success response with updated week data
     // If no, return error response with 500 status

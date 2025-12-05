@@ -571,7 +571,7 @@ function createComment($db, $data) {
     $stmt->bindValue(':author', $author, PDO::PARAM_STR);
     $stmt->bindValue(':text', $text, PDO::PARAM_STR)
     // TODO: Execute the query
-    
+    $result = $stmt->execute();
     // TODO: Check if insert was successful
     // If yes, get the last insert ID and return success response with 201 status
     // Include the new comment data in the response

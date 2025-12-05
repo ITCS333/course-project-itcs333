@@ -795,6 +795,8 @@ function validateDate($date) {
     // Format: 'Y-m-d'
     // Check that the created date matches the input string
     // Return true if valid, false otherwise
+    $d = DateTime::createFromFormat('Y-m-d', $date);
+    return $d && $d->format('Y-m-d') === $date;
 }
 
 

@@ -359,6 +359,14 @@ function updateWeek($db, $data) {
         $values[] = $title;
     }
     // If start_date is provided, validate format and add "start_date = ?"
+     if (isset($data['start_date'])) {
+        $startDate = trim($data['start_date']);
+        if (!validateDate($startDate)) {
+            sendError('Invalid start_date format. Expected YYYY-MM-DD', 400);
+        }
+        $fields[] = "start_date = ?";
+        $values[] = $startDate;
+    }
     // If description is provided, add "description = ?"
     // If links is provided, encode to JSON and add "links = ?"
     

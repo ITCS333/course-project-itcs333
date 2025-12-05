@@ -682,6 +682,7 @@ try {
         } else {
             // TODO: Return error for unsupported methods
             // Set HTTP status to 405 (Method Not Allowed)
+            sendError('Method not allowed', 405);
         }
     }
     

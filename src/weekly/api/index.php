@@ -673,7 +673,7 @@ try {
             createWeek($db, $body);
         } elseif ($method === 'PUT') {
             // TODO: Call updateWeek() with the decoded request body
-            
+            updateWeek($db, $body);
         } elseif ($method === 'DELETE') {
             // TODO: Get week_id from query parameter or request body
             // Call deleteWeek()

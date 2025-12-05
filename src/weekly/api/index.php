@@ -612,6 +612,10 @@ function deleteComment($db, $commentId) {
     }
     // TODO: Check if comment exists
     // Prepare and execute a SELECT query
+    $checkSql  = "SELECT id FROM comments WHERE id = :id LIMIT 1";
+    $checkStmt = $db->prepare($checkSql);
+    $checkStmt->bindValue(':id', $commentId, PDO::PARAM_INT);
+    $checkStmt->execute();
     // If not found, return error response with 404 status
     
     // TODO: Prepare DELETE query

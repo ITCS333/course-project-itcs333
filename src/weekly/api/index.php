@@ -349,7 +349,8 @@ function updateWeek($db, $data) {
     // TODO: Build UPDATE query dynamically based on provided fields
     // Initialize an array to hold SET clauses
     // Initialize an array to hold values for binding
-    
+    $fields = [];
+    $values = [];
     // TODO: Check which fields are provided and add to SET clauses
     // If title is provided, add "title = ?"
     // If start_date is provided, validate format and add "start_date = ?"

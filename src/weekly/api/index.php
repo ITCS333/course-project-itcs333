@@ -276,6 +276,8 @@ function createWeek($db, $data) {
     // If links is not provided, use an empty array []
     if(isset($data['links']) && is_array($data['links'])){
         $linksJson = json_encode([], JSON_UNESCAPED_UNICODE);
+    }else{
+        $linksJson = json_encode([],JSON_UNESCAPED_UNICODE )
     }
     
     

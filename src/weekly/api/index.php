@@ -103,9 +103,9 @@ $resource = isset($_GET['resource']) ? strtolower(trim($_GET['resource'])) : 'we
  */
 function getAllWeeks($db) {
     // TODO: Initialize variables for search, sort, and order from query parameters
-    $search = $isset($_GET['search']) ? trim($_GET['search']) : null ;
-    $sort = $isset($_GET['sort']) ? trim ($_GET['sort']) : 'start_data';
-    $order = $isset($_GEt['order']) ? trim ($_GET['order']) : 'asc'
+    $search =isset($_GET['search']) ? trim($_GET['search']) : null ;
+    $sort =isset($_GET['sort']) ? trim ($_GET['sort']) : 'start_data';
+    $order =isset($_GET['order']) ? trim ($_GET['order']) : 'asc'
     
     // TODO: Start building the SQL query
     // Base query: SELECT week_id, title, start_date, description, links, created_at FROM weeks
@@ -126,7 +126,7 @@ function getAllWeeks($db) {
     // If invalid, use default sort field (start_date)
     $allowedFields = ['title ', 'start_date' ,'created_at'] ;
     if(!isValidSortField($sort , $allowedFields)){
-        $sort = 'start_data';
+        $sort = 'start_date';
     }
     
     // TODO: Check if order parameter exists
@@ -137,7 +137,7 @@ function getAllWeeks($db) {
     }
     
     // TODO: Add ORDER BY clause to the query
-    $sql .= "order by {$sort} {$order}";
+    $sql .=" order by {$sort} {$order}";
 
     
     // TODO: Prepare the SQL query using PDO
@@ -151,7 +151,7 @@ function getAllWeeks($db) {
     $stmt->execute();
     
     // TODO: Fetch all results as an associative array
-    $weeks =$stmt->fetchAll(PDO::FETCH_ASSOC)
+    $weeks =$stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // TODO: Process each week's links field
     // Decode the JSON string back to an array using json_decode()
@@ -190,20 +190,20 @@ function getWeekById($db, $weekId) {
     
     // TODO: Prepare SQL query to select week by week_id
     // SELECT week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = ?
-    $sql = "week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = :week_id ";
+    $sql = "SELECT week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = :week_id ";
     $stmt =$db->prepare($sql);
     // TODO: Bind the week_id parameter
-    $stmt->bindValue(':week_id',$weekId,PDD::PARAM_STR);
+    $stmt->bindValue(':week_id',$weekId,PDO::PARAM_STR);
     // TODO: Execute the query
     $stmt->execute();
     // TODO: Fetch the result
-    $week = $stmt->fetch(PDD:FETCH_ASSOC);
+    $week = $stmt->fetch(PDO::FETCH_ASSOC);
     // TODO: Check if week exists
     // If yes, decode the links JSON and return success response with week data
     // If no, return error response with 404 status
     if($week){
         if(!empty($week['links'])){
-            $decoded =json_decode($week['link'], true);
+            $decoded =json_decode(['link'], true);
             $week['links']=is_array($decoded) ? $decoded : [] ;
         }else{
             $week['links']=[];
@@ -214,7 +214,7 @@ function getWeekById($db, $weekId) {
             'data' => $week
         ],200)
     }else{
-        sendError('week not found',404)
+        sendError('week not found',404);
     }
 }
 
@@ -261,13 +261,13 @@ function createWeek($db, $data) {
     // TODO: Check if week_id already exists
     // Prepare and execute a SELECT query to check for duplicates
     // If duplicate found, return error response with 409 status (Conflict)
-    $checksql ="SELECT ID from weeks WHERE week_id = week_id LIMIT 1";
+    $checksql ="SELECT id FROM weeks WHERE week_id = :week_id LIMIT 1";
     $checkstmt = $db->prepare($checksql);
     $checkstmt->bindValue(':week_id',$weekId, PDO::PARM_STR);
     $checkstmt->execute();
 
     if($checkstmt->fetch(PDO::FETCH_ASSOC)){
-        sendError('week ID already exists', 409)
+        sendError('week ID already exists', 409);
     }
 
     
@@ -275,7 +275,7 @@ function createWeek($db, $data) {
     // If links is provided and is an array, encode it to JSON using json_encode()
     // If links is not provided, use an empty array []
     if(isset($data['links']) && is_array($data['links'])){
-        $linksJson = json_encode([], JSON_UNESCAPED_UNICODE);
+        $linksJson = json_encode($data['links'], JSON_UNESCAPED_UNICODE);
     }else{
         $linksJson = json_encode([],JSON_UNESCAPED_UNICODE );
     }
@@ -284,7 +284,7 @@ function createWeek($db, $data) {
     // TODO: Prepare INSERT query
     // INSERT INTO weeks (week_id, title, start_date, description, links) VALUES (?, ?, ?, ?, ?)
     $sql ="INSERT INTO weeks (week_id, title, start_date, description, links)
-    VALUES (:week_ID, :title, :start_data, :description, links)";
+    VALUES (:week_id, :title, :start_date, :description, :links)";
     $stmt =$db->prepare($sql);
     // TODO: Bind parameters
     $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);

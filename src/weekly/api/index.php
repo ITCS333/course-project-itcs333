@@ -697,6 +697,7 @@ try {
             
         } elseif ($method === 'POST') {
             // TODO: Call createComment() with the decoded request body
+            createComment($db, $body);
             
         } elseif ($method === 'DELETE') {
             // TODO: Get comment id from query parameter or request body

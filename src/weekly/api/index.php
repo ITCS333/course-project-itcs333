@@ -254,11 +254,14 @@ function createWeek($db, $data) {
     
     // TODO: Validate start_date format
     // Use a regex or DateTime::createFromFormat() to verify YYYY-MM-DD format
-    // If invalid, return error response with 400 status
-    
+    // If invalid, return error response with 400 status    
+    if(!validateDate($startDate)) {
+        sendError('Invalid start_date format. Expected YYYY-MM-DD', 400);
+    }
     // TODO: Check if week_id already exists
     // Prepare and execute a SELECT query to check for duplicates
     // If duplicate found, return error response with 409 status (Conflict)
+    
     
     // TODO: Handle links array
     // If links is provided and is an array, encode it to JSON using json_encode()

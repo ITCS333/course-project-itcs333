@@ -392,7 +392,7 @@ function updateWeek($db, $data) {
 
     // TODO: Add updated_at timestamp to SET clauses
     // Add "updated_at = CURRENT_TIMESTAMP"
-    
+    $fields[] = "updated_at = CURRENT_TIMESTAMP";
     // TODO: Build the complete UPDATE query
     // UPDATE weeks SET [clauses] WHERE week_id = ?
     

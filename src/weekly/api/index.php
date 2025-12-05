@@ -420,7 +420,7 @@ function updateWeek($db, $data) {
             
         ],200)
     }else{
-        sendError('falied to update week ',500)
+        sendError('falied to update week ',500);
     }
     // If no, return error response with 500 status
 
@@ -466,7 +466,6 @@ function deleteWeek($db, $weekId) {
     // TODO: Prepare DELETE query for week
     // DELETE FROM weeks WHERE week_id = ?
     $deleteWeek = $db->prepare("DELETE FROM weeks WHERE week_id = :week_id");
-    $deleteWeek->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Bind the week_id parameter
     $deleteWeek->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Execute the query
@@ -517,9 +516,9 @@ function getCommentsByWeek($db, $weekId) {
     // TODO: Return JSON response with success status and data
     // Even if no comments exist, return an empty array
     sendResponse([
-        'success' =>'true',
-        'data'    =>$$comments
-    ],200)
+        'success' =>true,
+        'data'    =>$comments
+    ],200);
 }
 
 
@@ -569,7 +568,7 @@ function createComment($db, $data) {
     // TODO: Bind parameters
     $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     $stmt->bindValue(':author', $author, PDO::PARAM_STR);
-    $stmt->bindValue(':text', $text, PDO::PARAM_STR)
+    $stmt->bindValue(':text', $text, PDO::PARAM_STR);
     // TODO: Execute the query
     $result = $stmt->execute();
     // TODO: Check if insert was successful

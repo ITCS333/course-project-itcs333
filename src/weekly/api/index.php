@@ -554,10 +554,17 @@ function createComment($db, $data) {
     }
     // TODO: Check if the week exists
     // Prepare and execute a SELECT query on weeks table
+    $checkSql  = "SELECT id FROM weeks WHERE week_id = :week_id LIMIT 1";
+    $checkStmt = $db->prepare($checkSql);
+    $checkStmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+    $checkStmt->execute();
     // If week not found, return error response with 404 status
-    
+    if(!$checkStmt->fetch(PDO::FETCH_ASSOC)){
+        sendError('week not found',404)
+    }
     // TODO: Prepare INSERT query
     // INSERT INTO comments (week_id, author, text) VALUES (?, ?, ?)
+    $sql  = "INSERT INTO comments (week_id, author, text) VALUES (:week_id, :author, :text)";
     
     // TODO: Bind parameters
     

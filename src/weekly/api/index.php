@@ -144,7 +144,9 @@ function getAllWeeks($db) {
     $stmt=$db ->prepare($sql);
     // TODO: Bind parameters if using search
     // Use wildcards for LIKE: "%{$searchTerm}%"
-    
+    foreach ($params as $key => $value){
+        $stmt->bindValue($key, $value, PDO::PARAM_STR);
+    }
     // TODO: Execute the query
     
     // TODO: Fetch all results as an associative array

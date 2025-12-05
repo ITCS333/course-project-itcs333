@@ -353,6 +353,11 @@ function updateWeek($db, $data) {
     $values = [];
     // TODO: Check which fields are provided and add to SET clauses
     // If title is provided, add "title = ?"
+    if (isset($data['title'])) {
+        $title    = sanitizeInput($data['title']);
+        $fields[] = "title = ?";
+        $values[] = $title;
+    }
     // If start_date is provided, validate format and add "start_date = ?"
     // If description is provided, add "description = ?"
     // If links is provided, encode to JSON and add "links = ?"

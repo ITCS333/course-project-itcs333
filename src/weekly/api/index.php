@@ -622,7 +622,8 @@ function deleteComment($db, $commentId) {
     }
     // TODO: Prepare DELETE query
     // DELETE FROM comments WHERE id = ?
-    
+    $sql  = "DELETE FROM comments WHERE id = :id";
+    $stmt = $db->prepare($sql);
     // TODO: Bind the id parameter
     
     // TODO: Execute the query

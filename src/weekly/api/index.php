@@ -368,6 +368,12 @@ function updateWeek($db, $data) {
         $values[] = $startDate;
     }
     // If description is provided, add "description = ?"
+    if (isset($data['description'])) {
+        $description = sanitizeInput($data['description']);
+        $fields[]    = "description = ?";
+        $values[]    = $description;
+    }
+    
     // If links is provided, encode to JSON and add "links = ?"
     
     // TODO: If no fields to update, return error response with 400 status

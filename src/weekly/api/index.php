@@ -301,7 +301,7 @@ function createWeek($db, $data) {
         $responsedata =[
             'week_id'   =>$weekId,
             'title'     =>$title,
-            'start_data' =>$startDate,
+            'start_date' =>$startDate,
             'description' =>$description,
             'links'     =>json_decode($linksJson,true),
         ];
@@ -564,7 +564,7 @@ function createComment($db, $data) {
     // TODO: Prepare INSERT query
     // INSERT INTO comments (week_id, author, text) VALUES (?, ?, ?)
     $sql  = "INSERT INTO comments (week_id, author, text) VALUES (:week_id, :author, :text)";
-    
+    $stmt = $db->prepare($sql);
     // TODO: Bind parameters
     $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     $stmt->bindValue(':author', $author, PDO::PARAM_STR);

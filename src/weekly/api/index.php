@@ -537,6 +537,9 @@ function createComment($db, $data) {
     // TODO: Validate required fields
     // Check if week_id, author, and text are provided
     // If any field is missing, return error response with 400 status
+    if (empty($data['week_id']) || empty($data['author']) || !isset($data['text'])) {
+        sendError('week_id, author, and text are required', 400);
+    }
     
     // TODO: Sanitize input data
     // Trim whitespace from all fields

@@ -137,6 +137,8 @@ function getAllWeeks($db) {
     }
     
     // TODO: Add ORDER BY clause to the query
+    $sql .= "order by {$sort} {$order}";
+
     
     // TODO: Prepare the SQL query using PDO
     

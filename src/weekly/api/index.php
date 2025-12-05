@@ -293,10 +293,25 @@ function createWeek($db, $data) {
     $stmt->bindValue(':description', $description, PDO::PARAM_STR);
     $stmt->bindValue(':links', $linksJson, PDO::PARAM_STR);
     // TODO: Execute the query
-    
+    $result =$stmt->execute();
     // TODO: Check if insert was successful
     // If yes, return success response with 201 status (Created) and the new week data
     // If no, return error response with 500 status
+    if($result){
+        $responsedata =[
+            'week_id'   =>$weekId
+            'title'     =>$title
+            'start_data' =>$startDate
+            'description' =>$description
+            'links'     =>json_decode($linksJson,true)
+        ];
+        sendResponse([
+            'success' => true,
+            'data'    => $responseData
+        ],201)
+    }else{
+        sendResponse("faild to creat week",500)
+    }
 }
 
 

@@ -124,6 +124,10 @@ function getAllWeeks($db) {
     // TODO: Check if sort parameter exists
     // Validate sort field to prevent SQL injection (only allow: title, start_date, created_at)
     // If invalid, use default sort field (start_date)
+    $allowedFields = ['title ', 'start_date' ,'created_at'] ;
+    if(!isValidSortField($sort , $allowedFields)){
+        $sort = 'start_data';
+    }
     
     // TODO: Check if order parameter exists
     // Validate order to prevent SQL injection (only allow: asc, desc)

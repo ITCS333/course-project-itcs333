@@ -330,7 +330,9 @@ function createWeek($db, $data) {
 function updateWeek($db, $data) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
-    
+    if(empty($data['week_id'])){
+        sendError('week_id is required',400)
+    }
     // TODO: Check if week exists
     // Prepare and execute a SELECT query to find the week
     // If not found, return error response with 404 status

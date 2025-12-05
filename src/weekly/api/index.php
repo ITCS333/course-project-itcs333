@@ -235,6 +235,14 @@ function createWeek($db, $data) {
     // TODO: Validate required fields
     // Check if week_id, title, start_date, and description are provided
     // If any field is missing, return error response with 400 status
+    if(
+        empty($data['week_id']) ||
+        empty($data['title']) ||
+        empty($data['start_date']) ||
+        empty($data['description'])
+    ){
+        sendError('week_id, title, start_date, and description are required', 400);
+    }
     
     // TODO: Sanitize input data
     // Trim whitespace from title, description, and week_id

@@ -84,6 +84,7 @@ if(!is_array($body)){
 // TODO: Parse query parameters
 // Get the 'resource' parameter to determine if request is for weeks or comments
 // Example: ?resource=weeks or ?resource=comments
+$resource = isset($_GET['resource']) ? strtolower(trim($_GET['resource'])) : 'weeks' ;
 
 
 // ============================================================================
@@ -102,6 +103,9 @@ if(!is_array($body)){
  */
 function getAllWeeks($db) {
     // TODO: Initialize variables for search, sort, and order from query parameters
+    $search = $isset($_GET['search']) ? trim($_GET['search']) : null ;
+    $sort = $isset($_GET['sort']) ? trim ($_GET['sort']) : 'start_data';
+    $order = $isset($_GEt['order']) ? trim ($_GET['order']) : 'asc'
     
     // TODO: Start building the SQL query
     // Base query: SELECT week_id, title, start_date, description, links, created_at FROM weeks
@@ -134,6 +138,7 @@ function getAllWeeks($db) {
     
     // TODO: Return JSON response with success status and data
     // Use sendResponse() helper function
+    
 }
 
 

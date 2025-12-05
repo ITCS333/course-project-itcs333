@@ -506,7 +506,10 @@ function getCommentsByWeek($db, $weekId) {
 
     // TODO: Prepare SQL query to select comments for the week
     // SELECT id, week_id, author, text, created_at FROM comments WHERE week_id = ? ORDER BY created_at ASC
-    
+    $sql  = "SELECT id, week_id, author, text, created_at 
+             FROM comments 
+             WHERE week_id = :week_id 
+             ORDER BY created_at ASC";
     // TODO: Bind the week_id parameter
     
     // TODO: Execute the query

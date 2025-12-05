@@ -703,7 +703,7 @@ try {
             // TODO: Get comment id from query parameter or request body
             // Call deleteComment()
             $commentId = isset($_GET['id']) ? (int)$_GET['id'] : (isset($body['id']) ? (int)$body['id'] : null);
-            
+            deleteComment($db, $commentId);
             
         } else {
             // TODO: Return error for unsupported methods

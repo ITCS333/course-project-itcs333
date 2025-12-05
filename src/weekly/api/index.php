@@ -670,7 +670,7 @@ try {
             
         } elseif ($method === 'POST') {
             // TODO: Call createWeek() with the decoded request body
-            
+            createWeek($db, $body);
         } elseif ($method === 'PUT') {
             // TODO: Call updateWeek() with the decoded request body
             

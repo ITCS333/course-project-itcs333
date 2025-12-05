@@ -277,13 +277,15 @@ function createWeek($db, $data) {
     if(isset($data['links']) && is_array($data['links'])){
         $linksJson = json_encode([], JSON_UNESCAPED_UNICODE);
     }else{
-        $linksJson = json_encode([],JSON_UNESCAPED_UNICODE )
+        $linksJson = json_encode([],JSON_UNESCAPED_UNICODE );
     }
     
     
     // TODO: Prepare INSERT query
     // INSERT INTO weeks (week_id, title, start_date, description, links) VALUES (?, ?, ?, ?, ?)
-    
+    $sql ="INSERT INTO weeks (week_id, title, start_date, description, links)
+    VALUES (:week_ID, :title, :start_data, :description, links)";
+    $stmt =$db->prepare($sql);
     // TODO: Bind parameters
     
     // TODO: Execute the query

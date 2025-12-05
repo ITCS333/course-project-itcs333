@@ -193,14 +193,29 @@ function getWeekById($db, $weekId) {
     $sql = "week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = :week_id ";
     $stmt =$db->prepare($sql);
     // TODO: Bind the week_id parameter
-
+    $stmt->bindValue(':week_id',$weekId,PDD::PARAM_STR);
     // TODO: Execute the query
-    
+    $stmt->execute();
     // TODO: Fetch the result
-    
+    $week = $stmt->fetch(PDD:FETCH_ASSOC);
     // TODO: Check if week exists
     // If yes, decode the links JSON and return success response with week data
     // If no, return error response with 404 status
+    if($week){
+        if(!empty($week['links'])){
+            $decoded =json_decode($week['link'], true);
+            $week['links']=is_array($decoded) ? $decoded : [] ;
+        }else{
+            $week['links']=[];
+        
+        }
+        sendResponse([
+            'success' => true,
+            'data' => $week
+        ],200)
+    }else{
+        sendError('week not found',404)
+    }
 }
 
 

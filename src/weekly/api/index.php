@@ -141,7 +141,7 @@ function getAllWeeks($db) {
 
     
     // TODO: Prepare the SQL query using PDO
-    
+    $stmt=$db ->prepare($sql);
     // TODO: Bind parameters if using search
     // Use wildcards for LIKE: "%{$searchTerm}%"
     

@@ -625,9 +625,9 @@ function deleteComment($db, $commentId) {
     $sql  = "DELETE FROM comments WHERE id = :id";
     $stmt = $db->prepare($sql);
     // TODO: Bind the id parameter
-    
+    $stmt->bindValue(':id', $commentId, PDO::PARAM_INT);
     // TODO: Execute the query
-    
+    $stmt->execute();
     // TODO: Check if delete was successful
     // If yes, return success response
     // If no, return error response with 500 status

@@ -516,6 +516,10 @@ function getCommentsByWeek($db, $weekId) {
     $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // TODO: Return JSON response with success status and data
     // Even if no comments exist, return an empty array
+    sendResponse([
+        'success' =>'true',
+        'data'    =>$$comments
+    ],200)
 }
 
 

@@ -754,7 +754,7 @@ try {
 function sendResponse($data, $statusCode = 200) {
     // TODO: Set HTTP response code
     // Use http_response_code($statusCode)
-    sendError('An unexpected error occurred', 500);
+    http_response_code($statusCode);
     
     // TODO: Echo JSON encoded data
     // Use json_encode($data)

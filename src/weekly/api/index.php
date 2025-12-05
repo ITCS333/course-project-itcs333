@@ -151,9 +151,18 @@ function getAllWeeks($db) {
     $stmt->execute();
     
     // TODO: Fetch all results as an associative array
+    $weeks =$stmt->fetchAll(PDO::FETCH_ASSOC)
     
     // TODO: Process each week's links field
     // Decode the JSON string back to an array using json_decode()
+    foreach($weeks as &$week){
+        if(!empty($week['links'])){
+            $decoded =json_decode($week['links'], true);
+            $week['links'] = is_array($decoded) ? $decoded : [];
+        }else{
+            $week['links'] =[];
+        }
+    }
     
     // TODO: Return JSON response with success status and data
     // Use sendResponse() helper function

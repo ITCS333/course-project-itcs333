@@ -132,6 +132,9 @@ function getAllWeeks($db) {
     // TODO: Check if order parameter exists
     // Validate order to prevent SQL injection (only allow: asc, desc)
     // If invalid, use default order (asc)
+    if(!in_array($order ,['asc','desc'],true)){
+        $order='asc' ;
+    }
     
     // TODO: Add ORDER BY clause to the query
     

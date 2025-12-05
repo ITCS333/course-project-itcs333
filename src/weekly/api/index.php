@@ -511,9 +511,9 @@ function getCommentsByWeek($db, $weekId) {
     // TODO: Bind the week_id parameter
     $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Execute the query
-
+    $stmt->execute();
     // TODO: Fetch all results as an associative array
-    
+    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // TODO: Return JSON response with success status and data
     // Even if no comments exist, return an empty array
 }

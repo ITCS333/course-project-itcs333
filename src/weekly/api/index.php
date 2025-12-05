@@ -397,7 +397,7 @@ function updateWeek($db, $data) {
     // UPDATE weeks SET [clauses] WHERE week_id = ?
      $sql = "UPDATE weeks SET " . implode(', ', $fields) . " WHERE week_id = ?";
     // TODO: Prepare the query
-    
+    $stmt = $db->prepare($sql);
     // TODO: Bind parameters dynamically
     // Bind values array and then bind week_id at the end
     

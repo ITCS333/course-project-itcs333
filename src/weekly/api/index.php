@@ -444,7 +444,14 @@ function deleteWeek($db, $weekId) {
     // TODO: Check if week exists
     // Prepare and execute a SELECT query
     // If not found, return error response with 404 status
-    
+     $checkSql  = "SELECT id FROM weeks WHERE week_id = :week_id LIMIT 1";
+    $checkStmt = $db->prepare($checkSql);
+    $checkStmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+    $checkStmt->execute();
+
+    if (!$checkStmt->fetch(PDO::FETCH_ASSOC)) {
+        sendError('Week not found', 404);
+    }
     // TODO: Delete associated comments first (to maintain referential integrity)
     // Prepare DELETE query for comments table
     // DELETE FROM comments WHERE week_id = ?

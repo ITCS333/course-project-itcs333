@@ -452,15 +452,21 @@ function deleteWeek($db, $weekId) {
     if (!$checkStmt->fetch(PDO::FETCH_ASSOC)) {
         sendError('Week not found', 404);
     }
+
+
     // TODO: Delete associated comments first (to maintain referential integrity)
     // Prepare DELETE query for comments table
     // DELETE FROM comments WHERE week_id = ?
+    $deleteComments = $db->prepare("DELETE FROM comments WHERE week_id = :week_id");
+
     
     // TODO: Execute comment deletion query
-    
+    $deleteComments->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+    $deleteComments->execute();
     // TODO: Prepare DELETE query for week
     // DELETE FROM weeks WHERE week_id = ?
-    
+    $deleteWeek = $db->prepare("DELETE FROM weeks WHERE week_id = :week_id");
+    $deleteWeek->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Bind the week_id parameter
     
     // TODO: Execute the query

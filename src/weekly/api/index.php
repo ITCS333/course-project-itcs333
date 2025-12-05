@@ -395,7 +395,7 @@ function updateWeek($db, $data) {
     $fields[] = "updated_at = CURRENT_TIMESTAMP";
     // TODO: Build the complete UPDATE query
     // UPDATE weeks SET [clauses] WHERE week_id = ?
-    
+     $sql = "UPDATE weeks SET " . implode(', ', $fields) . " WHERE week_id = ?";
     // TODO: Prepare the query
     
     // TODO: Bind parameters dynamically

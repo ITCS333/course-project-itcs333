@@ -468,12 +468,20 @@ function deleteWeek($db, $weekId) {
     $deleteWeek = $db->prepare("DELETE FROM weeks WHERE week_id = :week_id");
     $deleteWeek->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Bind the week_id parameter
-    
+    $deleteWeek->bindValue(':week_id', $weekId, PDO::PARAM_STR);
     // TODO: Execute the query
-    
+    $deleteWeek->execute();
     // TODO: Check if delete was successful
     // If yes, return success response with message indicating week and comments deleted
     // If no, return error response with 500 status
+    if ($deleteWeek->rowCount() > 0) {
+    sendResponse([
+        'success' => true,
+        'message' => 'Week and associated comments deleted successfully'
+    ], 200);
+} else{
+    sendError('Failed to delete week', 500);
+}
 }
 
 

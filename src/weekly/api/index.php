@@ -287,7 +287,11 @@ function createWeek($db, $data) {
     VALUES (:week_ID, :title, :start_data, :description, links)";
     $stmt =$db->prepare($sql);
     // TODO: Bind parameters
-    
+    $stmt->bindValue(':week_id', $weekId, PDO::PARAM_STR);
+    $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+    $stmt->bindValue(':start_date', $startDate, PDO::PARAM_STR);
+    $stmt->bindValue(':description', $description, PDO::PARAM_STR);
+    $stmt->bindValue(':links', $linksJson, PDO::PARAM_STR);
     // TODO: Execute the query
     
     // TODO: Check if insert was successful

@@ -550,7 +550,7 @@ function createComment($db, $data) {
     // If empty, return error response with 400 status
     if($text===''){
         sendError('text cannot be empty', 400);
-    }
+    }   
     // TODO: Check if the week exists
     // Prepare and execute a SELECT query on weeks table
     $checkSql  = "SELECT id FROM weeks WHERE week_id = :week_id LIMIT 1";

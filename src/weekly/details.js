@@ -128,6 +128,15 @@ function renderComments() {
  */
 function handleAddComment(event) {
   // ... your implementation here ...
+  event.preventDefault();
+
+  const text = newCommentText.value.trim();
+  if (!text) return;
+
+  const newComment = { author: "Student", text };
+  currentComments.push(newComment);
+  renderComments();
+  newCommentText.value = "";
   
 }
 

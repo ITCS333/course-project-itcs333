@@ -106,6 +106,11 @@ function createCommentArticle(comment) {
  */
 function renderComments() {
   // ... your implementation here ...
+  commentList.innerHTML = "";
+  currentComments.forEach(comment => {
+    const item = createCommentArticle(comment);
+    commentList.appendChild(item);
+  });
 }
 
 /**
@@ -123,6 +128,7 @@ function renderComments() {
  */
 function handleAddComment(event) {
   // ... your implementation here ...
+  
 }
 
 /**

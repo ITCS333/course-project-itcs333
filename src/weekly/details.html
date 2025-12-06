@@ -59,29 +59,47 @@
             <!-- TODO: Add a container (like a 'div') for the list of comments. -->
              <div id="comments-list">
                 <!-- TODO: Add 1-2 dummy comments to show the structure. -->
+                 <article class="comment">
+                    <p>this calss was great</p>
+                 </article>
+
 
                 <!-- Example Comment 1: -->
                 <!-- TODO: Use an 'article' for each comment. -->
+                 <article class="comment">
                     <!-- TODO: Use a 'p' for the comment text (e.g., "I have a question about the 'header' tag."). -->
+                    <p>I have a question about the &lt;header&gt; tag.</p>
                     <!-- TODO: Use a 'footer' to show the author (e.g., "Posted by: John Doe"). -->
+                     <footer>Posted by: John Doe</footer>
                 <!-- End of comment article. -->
+                 </article>
+             </div>
 
             <!-- Subsection 2.2: Add a Comment Form -->
             <!-- TODO: Create a 'form' for users to post new comments. Action can be '#'. -->
-                <!-- TODO: Use a 'fieldset' to group the controls. -->
+             <form action="#">
+                <!-- TODO: Use a 'fie   ldset' to group the controls. -->
+                 <fieldset>
                     <!-- TODO: Add a 'legend', e.g., "Ask a Question". -->
-
+                     <legend>Ask a Question</legend>
                     <!-- TODO: Add a 'label' and 'textarea' for the comment box.
                          - label 'for': "new-comment"
                          - textarea 'id': "new-comment", required -->
+                         <label for="new-comment">Your Comment:</label>
+                         <textarea id="new-comment" required></textarea>
                     
                     <!-- TODO: Add a 'button' to submit the comment.
                          - type="submit", Text: "Post Comment" -->
+                         <button type="submit">Post Comment</button>
                 <!-- End of fieldset. -->
+                 </fieldset>
             <!-- End of form. -->
+             </form>
         <!-- End of discussion section. -->
+         </section>
 
     <!-- End of main. -->
+     </main>
 </body>
 </html>
 

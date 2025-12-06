@@ -159,6 +159,30 @@ function handleAddComment(event) {
  */
 async function initializePage() {
   // ... your implementation here ...
+  currentWeekId = getWeekIdFromURL();
+  
+  if(!currentWeekId){
+    weekTitle.textContent = "Week not found.";
+    return;
+
+  }
+  const [weeksRes, commentsRes] = await Promise.all([
+    fetch("weeks.json"),
+    fetch("comments.json")
+  ]);
+  const weeksData = await weeksRes.json();
+  const commentsData = await commentsRes.json();
+  const week = weeksData.find(w => w.id === currentWeekId);
+  currentComments = commentsData[currentWeekId] || [];
+
+  if (!week) {
+    weekTitle.textContent = "Week not found.";
+    return;
+  }
+
+  renderWeekDetails(week);
+  renderComments();
+  commentForm.addEventListener("submit", handleAddComment);
 }
 
 // --- Initial Page Load ---

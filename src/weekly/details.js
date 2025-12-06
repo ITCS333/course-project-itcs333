@@ -83,6 +83,17 @@ function renderWeekDetails(week) {
  */
 function createCommentArticle(comment) {
   // ... your implementation here ...
+  const article = document.createElement("article");
+  const p = document.createElement("p");
+  const footer = document.createElement("footer");
+  p.textContent = comment.text;
+  footer.textContent = "Posted by: " + comment.author;
+
+  article.appendChild(p);
+  article.appendChild(footer);
+
+  return article;
+
 }
 
 /**

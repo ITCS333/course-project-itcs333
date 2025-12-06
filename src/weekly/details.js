@@ -24,6 +24,13 @@ let currentComments = [];
 
 // --- Element Selections ---
 // TODO: Select all the elements you added IDs for in step 2.
+const weekTitle = document.querySelector("#week-title");
+const weekStartDate = document.querySelector("#week-start-date");
+const weekDescription = document.querySelector("#week-description");
+const weekLinksList = document.querySelector("#week-links-list");
+const commentList = document.querySelector("#comment-list");
+const commentForm = document.querySelector("#comment-form");
+const newCommentText = document.querySelector("#new-comment-text");
 
 // --- Functions ---
 
@@ -36,6 +43,8 @@ let currentComments = [];
  */
 function getWeekIdFromURL() {
   // ... your implementation here ...
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id");
 }
 
 /**
@@ -51,6 +60,10 @@ function getWeekIdFromURL() {
  */
 function renderWeekDetails(week) {
   // ... your implementation here ...
+  weekTitle.textContent = week.title;
+  weekStartDate.textContent = "Starts on: " + week.startDate;
+  weekDescription.textContent = week.description;
+  week
 }
 
 /**

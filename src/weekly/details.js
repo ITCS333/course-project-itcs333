@@ -63,7 +63,16 @@ function renderWeekDetails(week) {
   weekTitle.textContent = week.title;
   weekStartDate.textContent = "Starts on: " + week.startDate;
   weekDescription.textContent = week.description;
-  week
+  
+  weekLinksList.innerHTML = "";
+  week.links.forEach(link => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = link;
+    a.textContent = link;
+    li.appendChild(a);
+    weekLinksList.appendChild(li);
+  });
 }
 
 /**

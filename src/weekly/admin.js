@@ -17,8 +17,10 @@ let weeks = [];
 
 // --- Element Selections ---
 // TODO: Select the week form ('#week-form').
+const weekForm = document.querySelector("#week-form");
 
 // TODO: Select the weeks table body ('#weeks-tbody').
+const weeksTableBody = document.querySelector("#weeks-tbody");
 
 // --- Functions ---
 
@@ -34,6 +36,17 @@ let weeks = [];
  */
 function createWeekRow(week) {
   // ... your implementation here ...
+  const tr = document.createElement("tr");
+
+  tr.innerHTML = `
+      <td>${week.title}</td>
+      <td>${week.description}</td>
+      <td>
+        <button class="edit-btn" data-id="${week.id}">Edit</button>
+        <button class="delete-btn" data-id="${week.id}">Delete</button>
+      </td>
+  `;
+  return tr;
 }
 
 /**
@@ -46,6 +59,7 @@ function createWeekRow(week) {
  */
 function renderTable() {
   // ... your implementation here ...
+  weeksTableBody.innerHTML = "";
 }
 
 /**

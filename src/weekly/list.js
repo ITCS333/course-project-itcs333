@@ -13,6 +13,7 @@
 
 // --- Element Selections ---
 // TODO: Select the section for the week list ('#week-list-section').
+const listSection = document.querySelector("#week-list-section");
 
 // --- Functions ---
 
@@ -25,7 +26,17 @@
  */
 function createWeekArticle(week) {
   // ... your implementation here ...
+  const article = document.createElement("article");
+  article.innerHTML = `
+      <h2>${week.title}</h2>
+      <p>Starts on: ${week.startDate}</p>
+      <p>${week.description}</p>
+      <a href="details.html?id=${week.id}">View Details & Discussion</a>
+  `;
+
+  return article;
 }
+
 
 /**
  * TODO: Implement the loadWeeks function.
@@ -40,6 +51,15 @@ function createWeekArticle(week) {
  */
 async function loadWeeks() {
   // ... your implementation here ...
+  const response = await fetch("weeks.json");
+  const weeks = await response.json();
+
+  listSection.innerHTML = "";
+
+  weeks.forEach(week => {
+    const item = createWeekArticle(week);
+    listSection.appendChild(item);
+  });
 }
 
 // --- Initial Page Load ---

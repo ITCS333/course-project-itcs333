@@ -82,6 +82,23 @@ function renderTable() {
  */
 function handleAddWeek(event) {
   // ... your implementation here ...
+  event.preventDefault();
+
+  const title=document.querySelector("#week-title").value;
+  const date = document.querySelector("#week-start-date").value;
+  const desc = document.querySelector("#week-description").value;
+  const links = document.querySelector("#week-links").value.split("\n");
+
+  const newWeek ={
+    id:`week_${Date.now()}`,
+    title,
+    description:desc,
+    date,
+    links
+  };
+  weeks.push(newWeek);
+  renderTable();
+  weekForm.reset();
 }
 
 /**
@@ -96,6 +113,11 @@ function handleAddWeek(event) {
  */
 function handleTableClick(event) {
   // ... your implementation here ...
+  if(event.target.classList.contains("delete-btn")){
+    const id =event.target.getAttribute("data-id");
+    weeks=weeks.filter(w => w.id !==id)
+    renderTable();
+  }
 }
 
 /**
@@ -110,6 +132,12 @@ function handleTableClick(event) {
  */
 async function loadAndInitialize() {
   // ... your implementation here ...
+  const response= await fetch("weeks.json")
+  weeks= await response.json();
+  renderTable();
+
+  weekForm.addEventListener("submit", handleAddWeek);
+ weeksTableBody.addEventListener("click", handleTableClick);
 }
 
 // --- Initial Page Load ---

@@ -60,6 +60,11 @@ function createWeekRow(week) {
 function renderTable() {
   // ... your implementation here ...
   weeksTableBody.innerHTML = "";
+  weeks.forEach(week =>{
+    const row =createWeekRow(week);
+    weeksTableBody.appendChild(row);
+  });
+  
 }
 
 /**

@@ -51,7 +51,7 @@ function createWeekArticle(week) {
  */
 async function loadWeeks() {
   // ... your implementation here ...
-  const response = await fetch("weeks.json");
+  const response = await fetch("api/weeks.json");
   const weeks = await response.json();
 
   listSection.innerHTML = "";

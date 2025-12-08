@@ -294,7 +294,7 @@ function handleSort(event) {
  */
 async function loadStudentsAndInitialize() {
   try {
-    const response = await fetch("students.json");
+     const response = await fetch("api/students.json");
     if (!response.ok) {
       console.error("Failed to fetch students.json:", response.status);
       return;

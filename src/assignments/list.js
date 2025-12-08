@@ -62,7 +62,7 @@ function createAssignmentArticle(assignment) {
 async function loadAssignments() {
   // ... your implementation here ...
   try {
-    const response = await fetch("assignments.json");
+    const response = await fetch("api/assignments.json");
     const assignments = await response.json();
 
     listSection.innerHTML = "";

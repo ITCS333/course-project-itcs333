@@ -132,7 +132,7 @@ function handleTableClick(event) {
  */
 async function loadAndInitialize() {
   // ... your implementation here ...
-  const response= await fetch("weeks.json")
+  const response= await fetch("api/weeks.json")
   weeks= await response.json();
   renderTable();
 

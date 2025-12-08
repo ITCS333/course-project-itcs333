@@ -155,7 +155,7 @@ function handleTableClick(event) {
 async function loadAndInitialize() {
   // ... your implementation here ...
    try {
-        const response = await fetch('resources.json');
+        const response = await fetch('api/resources.json');
         
         resources = await response.json();
 

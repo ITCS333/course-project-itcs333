@@ -57,7 +57,7 @@ function createResourceArticle(resource) {
  */
 async function loadResources() {
   try {
-    const response = await fetch("resources.json");
+    const response = await fetch("api/resources.json");
     const resources = await response.json();
 
     listSection.innerHTML = "";

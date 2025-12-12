@@ -102,15 +102,31 @@ function handleAddAssignment(event) {
   const dueDate = document.getElementById('assignment-due-date').value;
   const files = document.getElementById('assignment-files').value;
   
-  const newAssignment = {
-    id: `asg_${Date.now()}`,
-    title: title,
-    description: description,
-    dueDate: dueDate,
-    files: files.split('\n').filter(file => file.trim() !== '')
-  };
-  
-  assignments.push(newAssignment);
+  if (assignmentForm.dataset.editingId) {
+
+    const id = assignmentForm.dataset.editingId;
+    const assignment = assignments.find(a => a.id === id);
+
+    assignment.title = title;
+    assignment.description = description;
+    assignment.dueDate = dueDate;
+    assignment.files = files;
+
+    // Back to normal mode
+    delete assignmentForm.dataset.editingId;
+    document.getElementById("add-assignment").textContent = "Add Assignment";
+
+  } else {
+    // Normal add
+    assignments.push({
+      id: `asg_${Date.now()}`,
+      title,
+      description,
+      dueDate,
+      files
+    });
+  }
+
   renderTable();
   assignmentForm.reset();
 }
@@ -131,6 +147,25 @@ function handleTableClick(event) {
     const assignmentId = event.target.getAttribute('data-id');
     assignments = assignments.filter(assignment => assignment.id !== assignmentId);
     renderTable();
+  }
+   // EDIT
+  if (event.target.classList.contains('edit-btn')) {
+    const assignmentId = event.target.getAttribute('data-id');
+    const assignment = assignments.find(a => a.id === assignmentId);
+
+    if (!assignment) return;
+
+    // Fill the form with the data
+    document.getElementById('assignment-title').value = assignment.title;
+    document.getElementById('assignment-description').value = assignment.description;
+    document.getElementById('assignment-due-date').value = assignment.dueDate;
+    document.getElementById('assignment-files').value = assignment.files.join("\n");
+
+    // Change button text
+    document.getElementById("add-assignment").textContent = "Save Changes";
+
+    // Add a flag to know we are editing
+    assignmentForm.dataset.editingId = assignment.id;
   }
 }
 

@@ -187,7 +187,7 @@ function createAssignment($db, $data) {
         sendResponse(["error" => "Invalid date"], 400);
     }
     // TODO: Generate a unique assignment ID
-      $id = uniqid()
+      $id = uniqid();
     // TODO: Handle the 'files' field
         $files = isset($data['files']) ? json_encode($data['files']) : json_encode([]);
     // TODO: Prepare INSERT query
@@ -204,10 +204,10 @@ function createAssignment($db, $data) {
     
     // TODO: Check if insert was successful
     if (!$success) {
-        sendResponse(["error" => "Insert failed"], 500);
-  // TODO: If insert failed, return 500 error
+          // TODO: If insert failed, return 500 error
     sendResponse(["error" => "Insert failed"], 500);
-}sendResponse(["success" => true, "id" => $id], 201);
+}
+sendResponse(["success" => true, "id" => $id], 201);
 }
 /**
  * Function: Update an existing assignment
@@ -494,7 +494,7 @@ function deleteComment($db, $commentId) {
 
     
     // TODO: Bind the :id parameter
-     $stmt->bindParam(":id", $commentId, PD
+    $stmt->bindParam(":id", $commentId, PDO::PARAM_INT);
     
     // TODO: Execute the statement
         $stmt->execute();

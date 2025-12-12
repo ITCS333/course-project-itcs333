@@ -159,7 +159,7 @@ function handleTableClick(event) {
     document.getElementById('assignment-title').value = assignment.title;
     document.getElementById('assignment-description').value = assignment.description;
     document.getElementById('assignment-due-date').value = assignment.dueDate;
-    document.getElementById('assignment-files').value = assignment.files.join("\n");
+    document.getElementById('assignment-files').value = assignment.files;
 
     // Change button text
     document.getElementById("add-assignment").textContent = "Save Changes";

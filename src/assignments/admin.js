@@ -34,6 +34,7 @@ const assignmentsTableBody = document.getElementById('assignments-tbody');
  */
 function createAssignmentRow(assignment) {
   // ... your implementation here ...
+  
   const tr = document.createElement("tr");
 
   const titleTd = document.createElement("td");
@@ -146,7 +147,7 @@ function handleTableClick(event) {
 async function loadAndInitialize() {
   // ... your implementation here ...
  try {
-    const response = await fetch("api/assignments.json");
+    const response = await fetch("assignments.json");
     assignments = await response.json();
 
     renderTable();

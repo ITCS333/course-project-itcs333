@@ -147,7 +147,7 @@ function handleTableClick(event) {
 async function loadAndInitialize() {
   // ... your implementation here ...
  try {
-    const response = await fetch("api.php?resource=assignments");
+    const response = await fetch("api/assignments.json");
     assignments = await response.json();
 
     renderTable();

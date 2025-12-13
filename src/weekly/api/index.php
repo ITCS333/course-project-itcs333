@@ -109,7 +109,7 @@ function getAllWeeks($db) {
     
     // TODO: Start building the SQL query
     // Base query: SELECT week_id, title, start_date, description, links, created_at FROM weeks
-    $sql = "SELECT week_id, title, start_date, description , links, created_at ,updated_at FROM weeks" ;
+    $sql = "SELECT week_id, title, start_date, description, links, created_at FROM weeks";
 
     $params = [];
     

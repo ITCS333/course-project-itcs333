@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION['initialized'] = true;
 /**
  * Assignment Management API
  * 

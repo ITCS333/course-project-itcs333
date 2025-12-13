@@ -89,7 +89,7 @@ function getStudents($db) {
     // Validate sort field to prevent SQL injection (only allow: name, student_id, email)
     // Validate order to prevent SQL injection (only allow: asc, desc)
     $allowedSort = ['name', 'student_id', 'email'];
-    $sort = in_array($queryParams['sort'] ?? '', $allowedSort) ? $queryParams['sort'] : 'id';
+    $sort = in_array($queryParams['sort'] ?? '', $allowedSort) ? $queryParams['sort'] : 'student_id';
     $order = ($queryParams['order'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
     $sql .= " ORDER BY $sort $order";
     // TODO: Prepare the SQL query using PDO

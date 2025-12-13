@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  min-height: 100vh;
+}
+
+header {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+  font-size: 1.8rem;
+}
+
+main {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+section {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin: 20px 0 10px;
+}
+
+form {
+  margin-top: 10px;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  background: #eaeaea;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+details {
+  margin-top: 15px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background: #eee;
+}
+
+td button {
+  margin-right: 5px;
+  padding: 5px 8px;
+}

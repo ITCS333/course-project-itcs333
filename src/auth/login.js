@@ -18,13 +18,17 @@
 // the HTML document is parsed before this script runs.
 
 // TODO: Select the login form. (You'll need to add id="login-form" to the <form> in your HTML).
-const loginForm = document.getElementById("login-form");
+const loginForm = document.getElementById("login-form")
+
 // TODO: Select the email input element by its ID.
-const emailInput = document.getElementById("email");
+const emailInput = document.getElementById("email")
+
 // TODO: Select the password input element by its ID.
-const passwordInput = document.getElementById("password");
+const passwordInput = document.getElementById("password")
+
 // TODO: Select the message container element by its ID.
-const messageContainer = document.getElementById("message-container");
+const messageContainer = document.getElementById("message-container")
+
 // --- Functions ---
 
 /**
@@ -40,8 +44,8 @@ const messageContainer = document.getElementById("message-container");
  */
 function displayMessage(message, type) {
   // ... your implementation here ...
-    messageContainer.textContent = message;
-    messageContainer.className = type;
+  messageContainer.textContent = message
+  messageContainer.className = type
 }
 
 /**
@@ -58,8 +62,7 @@ function displayMessage(message, type) {
  */
 function isValidEmail(email) {
   // ... your implementation here ...
-  const pattern = /\S+@\S+\.\S+/;
-  return pattern.test(email);
+  return /\S+@\S+\.\S+/.test(email)
 }
 
 /**
@@ -74,8 +77,7 @@ function isValidEmail(email) {
  */
 function isValidPassword(password) {
   // ... your implementation here ...
-  if (password.length >= 8){return true;}
-  else return false;
+  return password.length >= 8
 }
 
 /**
@@ -92,23 +94,45 @@ function isValidPassword(password) {
  * - Call `displayMessage("Login successful!", "success")`.
  * - (Optional) Clear the email and password input fields.
  */
-function handleLogin(event) {
+async function handleLogin(event) {
   // ... your implementation here ...
-  event.preventDefault();
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
-   if (!isValidEmail(email)) {
-    displayMessage("Invalid email format.", "error");
-    return;
+  event.preventDefault()
+
+  const email = emailInput.value.trim()
+  const password = passwordInput.value.trim()
+
+  if (!isValidEmail(email)) {
+    displayMessage("Invalid email format.", "error")
+    return
   }
 
   if (!isValidPassword(password)) {
-    displayMessage("Password must be at least 8 characters.", "error");
-    return;
+    displayMessage("Password must be at least 8 characters.", "error")
+    return
   }
-  displayMessage("Login successful!", "success");
-  emailInput.value = "";
-  passwordInput.value = "";
+
+  try {
+    const response = await fetch("index.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, password })
+    })
+
+    const data = await response.json()
+
+    if (data.success) {
+      displayMessage("Login successful!", "success")
+      emailInput.value = ""
+      passwordInput.value = ""
+      window.location.href = "home.php"
+      return
+    }
+
+    displayMessage(data.message || "Invalid email or password", "error")
+  } catch (error) {
+    displayMessage("Server error", "error")
+  }
 }
 
 /**
@@ -121,11 +145,11 @@ function handleLogin(event) {
  */
 function setupLoginForm() {
   // ... your implementation here ...
-   if (loginForm) {
-    loginForm.addEventListener("submit", handleLogin);
+  if (loginForm) {
+    loginForm.addEventListener("submit", handleLogin)
   }
 }
 
 // --- Initial Page Load ---
 // Call the main setup function to attach the event listener.
-setupLoginForm();
+setupLoginForm()

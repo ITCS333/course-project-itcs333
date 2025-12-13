@@ -17,9 +17,9 @@ let assignments = [];
 
 // --- Element Selections ---
 // TODO: Select the assignment form ('#assignment-form').
-const assignmentForm = document.getElementById('assignment-form');
+
 // TODO: Select the assignments table body ('#assignments-tbody').
-const assignmentsTableBody = document.getElementById('assignments-tbody');
+
 // --- Functions ---
 
 /**
@@ -34,35 +34,6 @@ const assignmentsTableBody = document.getElementById('assignments-tbody');
  */
 function createAssignmentRow(assignment) {
   // ... your implementation here ...
-  
-  const tr = document.createElement("tr");
-
-  const titleTd = document.createElement("td");
-  titleTd.textContent = assignment.title;
-
-  const dueDateTd = document.createElement("td");
-  dueDateTd.textContent = assignment.dueDate;
-
-  const actionsTd = document.createElement("td");
-
-  const editBtn = document.createElement("button");
-  editBtn.textContent = "Edit";
-  editBtn.classList.add("edit-btn");
-  editBtn.dataset.id = assignment.id;
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "Delete";
-  deleteBtn.classList.add("delete-btn");
-  deleteBtn.dataset.id = assignment.id;
-
-  actionsTd.appendChild(editBtn);
-  actionsTd.appendChild(deleteBtn);
-
-  tr.appendChild(titleTd);
-  tr.appendChild(dueDateTd);
-  tr.appendChild(actionsTd);
-
-  return tr;
 }
 
 /**
@@ -75,11 +46,6 @@ function createAssignmentRow(assignment) {
  */
 function renderTable() {
   // ... your implementation here ...
-   assignmentsTableBody.innerHTML = '';
-  assignments.forEach(assignment => {
-    const row = createAssignmentRow(assignment);
-    assignmentsTableBody.appendChild(row);
-  });
 }
 
 /**
@@ -95,40 +61,6 @@ function renderTable() {
  */
 function handleAddAssignment(event) {
   // ... your implementation here ...
-   event.preventDefault();
-  
-  const title = document.getElementById('assignment-title').value;
-  const description = document.getElementById('assignment-description').value;
-  const dueDate = document.getElementById('assignment-due-date').value;
-  const files = document.getElementById('assignment-files').value;
-  
-  if (assignmentForm.dataset.editingId) {
-
-    const id = assignmentForm.dataset.editingId;
-    const assignment = assignments.find(a => a.id === id);
-
-    assignment.title = title;
-    assignment.description = description;
-    assignment.dueDate = dueDate;
-    assignment.files = files;
-
-    // Back to normal mode
-    delete assignmentForm.dataset.editingId;
-    document.getElementById("add-assignment").textContent = "Add Assignment";
-
-  } else {
-    // Normal add
-    assignments.push({
-      id: `asg_${Date.now()}`,
-      title,
-      description,
-      dueDate,
-      files
-    });
-  }
-
-  renderTable();
-  assignmentForm.reset();
 }
 
 /**
@@ -143,30 +75,6 @@ function handleAddAssignment(event) {
  */
 function handleTableClick(event) {
   // ... your implementation here ...
-  if (event.target.classList.contains('delete-btn')) {
-    const assignmentId = event.target.getAttribute('data-id');
-    assignments = assignments.filter(assignment => assignment.id !== assignmentId);
-    renderTable();
-  }
-   // EDIT
-  if (event.target.classList.contains('edit-btn')) {
-    const assignmentId = event.target.getAttribute('data-id');
-    const assignment = assignments.find(a => a.id === assignmentId);
-
-    if (!assignment) return;
-
-    // Fill the form with the data
-    document.getElementById('assignment-title').value = assignment.title;
-    document.getElementById('assignment-description').value = assignment.description;
-    document.getElementById('assignment-due-date').value = assignment.dueDate;
-    document.getElementById('assignment-files').value = assignment.files;
-
-    // Change button text
-    document.getElementById("add-assignment").textContent = "Save Changes";
-
-    // Add a flag to know we are editing
-    assignmentForm.dataset.editingId = assignment.id;
-  }
 }
 
 /**
@@ -181,18 +89,6 @@ function handleTableClick(event) {
  */
 async function loadAndInitialize() {
   // ... your implementation here ...
- try {
-    const response = await fetch("api/assignments.json");
-    assignments = await response.json();
-
-    renderTable();
-
-    assignmentForm.addEventListener("submit", handleAddAssignment);
-    assignmentsTableBody.addEventListener("click", handleTableClick);
-
-  } catch (error) {
-    console.error("Error loading assignments:", error);
-  }
 }
 
 // --- Initial Page Load ---

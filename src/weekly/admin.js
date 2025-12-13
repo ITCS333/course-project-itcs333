@@ -17,10 +17,8 @@ let weeks = [];
 
 // --- Element Selections ---
 // TODO: Select the week form ('#week-form').
-const weekForm = document.querySelector("#week-form");
 
 // TODO: Select the weeks table body ('#weeks-tbody').
-const weeksTableBody = document.querySelector("#weeks-tbody");
 
 // --- Functions ---
 
@@ -36,17 +34,6 @@ const weeksTableBody = document.querySelector("#weeks-tbody");
  */
 function createWeekRow(week) {
   // ... your implementation here ...
-  const tr = document.createElement("tr");
-
-  tr.innerHTML = `
-      <td>${week.title}</td>
-      <td>${week.description}</td>
-      <td>
-        <button class="edit-btn" data-id="${week.id}">Edit</button>
-        <button class="delete-btn" data-id="${week.id}">Delete</button>
-      </td>
-  `;
-  return tr;
 }
 
 /**
@@ -59,12 +46,6 @@ function createWeekRow(week) {
  */
 function renderTable() {
   // ... your implementation here ...
-  weeksTableBody.innerHTML = "";
-  weeks.forEach(week =>{
-    const row =createWeekRow(week);
-    weeksTableBody.appendChild(row);
-  });
-  
 }
 
 /**
@@ -82,23 +63,6 @@ function renderTable() {
  */
 function handleAddWeek(event) {
   // ... your implementation here ...
-  event.preventDefault();
-
-  const title=document.querySelector("#week-title").value;
-  const date = document.querySelector("#week-start-date").value;
-  const desc = document.querySelector("#week-description").value;
-  const links = document.querySelector("#week-links").value.split("\n");
-
-  const newWeek ={
-    id:`week_${Date.now()}`,
-    title,
-    description:desc,
-    date,
-    links
-  };
-  weeks.push(newWeek);
-  renderTable();
-  weekForm.reset();
 }
 
 /**
@@ -113,11 +77,6 @@ function handleAddWeek(event) {
  */
 function handleTableClick(event) {
   // ... your implementation here ...
-  if(event.target.classList.contains("delete-btn")){
-    const id =event.target.getAttribute("data-id");
-    weeks=weeks.filter(w => w.id !==id)
-    renderTable();
-  }
 }
 
 /**
@@ -132,12 +91,6 @@ function handleTableClick(event) {
  */
 async function loadAndInitialize() {
   // ... your implementation here ...
-  const response= await fetch("api/weeks.json")
-  weeks= await response.json();
-  renderTable();
-
-  weekForm.addEventListener("submit", handleAddWeek);
- weeksTableBody.addEventListener("click", handleTableClick);
 }
 
 // --- Initial Page Load ---

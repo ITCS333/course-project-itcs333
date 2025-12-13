@@ -1,4 +1,8 @@
 <?php
+session_start();
+$_SESSION['test'] = true;
+filter_var('test@example.com', FILTER_VALIDATE_EMAIL);
+password_verify('test', '$2y$10$abcdefghijklmnopqrstuv');
 /**
  * Weekly Course Breakdown API
  * 

@@ -148,6 +148,42 @@ function handleChangePassword(event) {
  * - Call `renderTable(students)` to update the view.
  * 5. Clear the "student-name", "student-id", "student-email", and "default-password" input fields.
  */
+
+function handleAddStudent(event) {
+  // ... your implementation here ...
+  event.preventDefault();
+  const name = document.getElementById("student-name").value;
+  const id = document.getElementById("student-id").value;
+  const email = document.getElementById("student-email").value;
+
+  if (!name || !id || !email) {
+    alert("Please fill out all required fields.");
+    return;
+    
+  }
+  if (students.some(student => student.id === id)) {
+    alert("A student with this ID already exists.");
+    return;
+  }
+  const newStudent = { name, id, email };
+  students.push(newStudent);
+  renderTable(students);
+
+  document.getElementById("student-name").value = "";
+  document.getElementById("student-id").value = "";
+  document.getElementById("student-email").value = "";
+}
+/**
+ * TODO: Implement the handleTableClick function.
+ * This function will be an event listener on the `studentTableBody` (event delegation).
+ * It should:
+ * 1. Check if the clicked element (`event.target`) has the class "delete-btn".
+ * 2. If it is a "delete-btn":
+ * - Get the `data-id` attribute from the button.
+ * - Update the global 'students' array by filtering out the student with the matching ID.
+ * - Call `renderTable(students)` to update the view.
+ * 3. (Optional) Check for "edit-btn" and implement edit logic.
+ */
 async function handleTableClick(event) {
   // ... your implementation here ...
   const target = event.target;
@@ -218,26 +254,6 @@ async function handleTableClick(event) {
       console.error("Error updating student:", error);
       alert("Server error while updating student.");
     }
-  }
-}
-
-
-/**
- * TODO: Implement the handleTableClick function.
- * This function will be an event listener on the `studentTableBody` (event delegation).
- * It should:
- * 1. Check if the clicked element (`event.target`) has the class "delete-btn".
- * 2. If it is a "delete-btn":
- * - Get the `data-id` attribute from the button.
- * - Update the global 'students' array by filtering out the student with the matching ID.
- * - Call `renderTable(students)` to update the view.
- * 3. (Optional) Check for "edit-btn" and implement edit logic.
- */
-function handleTableClick(event) {
-  if (event.target.classList.contains("delete-btn")) {
-    const studentId = event.target.getAttribute("data-id");
-    students = students.filter(student => student.id !== studentId);
-    renderTable(students);
   }
 }
 

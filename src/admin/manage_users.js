@@ -148,10 +148,10 @@ function handleChangePassword(event) {
  * - Call `renderTable(students)` to update the view.
  * 5. Clear the "student-name", "student-id", "student-email", and "default-password" input fields.
  */
-
 function handleAddStudent(event) {
   // ... your implementation here ...
   event.preventDefault();
+
   const name = document.getElementById("student-name").value;
   const id = document.getElementById("student-id").value;
   const email = document.getElementById("student-email").value;
@@ -159,7 +159,6 @@ function handleAddStudent(event) {
   if (!name || !id || !email) {
     alert("Please fill out all required fields.");
     return;
-    
   }
   if (students.some(student => student.id === id)) {
     alert("A student with this ID already exists.");
@@ -173,6 +172,7 @@ function handleAddStudent(event) {
   document.getElementById("student-id").value = "";
   document.getElementById("student-email").value = "";
 }
+
 /**
  * TODO: Implement the handleTableClick function.
  * This function will be an event listener on the `studentTableBody` (event delegation).
@@ -184,76 +184,11 @@ function handleAddStudent(event) {
  * - Call `renderTable(students)` to update the view.
  * 3. (Optional) Check for "edit-btn" and implement edit logic.
  */
-async function handleTableClick(event) {
-  // ... your implementation here ...
-  const target = event.target;
-  if (!target.closest("button")) return;
-
-  if (target.classList.contains("delete-btn")) {
-    const id = target.dataset.id;
-    if (!id) return;
-
-    if (!confirm("Are you sure you want to delete this student?")) return;
-
-    try {
-      const response = await fetch(
-        `${API_URL}?student_id=${encodeURIComponent(id)}`,
-        { method: "DELETE" }
-      );
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        alert(result.message || "Failed to delete student.");
-        return;
-      }
-
-      alert("Student deleted successfully.");
-      await loadStudents();
-    } catch (error) {
-      console.error("Error deleting student:", error);
-      alert("Server error while deleting student.");
-  }
-  }
-
-  if (target.classList.contains("edit-btn")) {
-    const id = target.dataset.id;
-    if (!id) return;
-
-    const student = students.find((s) => s.id === id);
-    if (!student) return;
-
-    const newName = prompt("Enter new name:", student.name);
-    const newEmail = prompt("Enter new email:", student.email);
-
-    if (!newName || !newEmail) return;
-
-    const payload = {
-      student_id: id,
-      name: newName.trim(),
-      email: newEmail.trim(),
-    };
-
-    try {
-      const response = await fetch(API_URL, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        alert(result.message || "Failed to update student.");
-        return;
-      }
-
-      alert("Student updated successfully.");
-      await loadStudents();
-    } catch (error) {
-      console.error("Error updating student:", error);
-      alert("Server error while updating student.");
-    }
+function handleTableClick(event) {
+  if (event.target.classList.contains("delete-btn")) {
+    const studentId = event.target.getAttribute("data-id");
+    students = students.filter(student => student.id !== studentId);
+    renderTable(students);
   }
 }
 
@@ -359,7 +294,7 @@ function handleSort(event) {
  */
 async function loadStudentsAndInitialize() {
   try {
-     const response = await fetch("api/students.json");
+    const response = await fetch("api/students.json");
     if (!response.ok) {
       console.error("Failed to fetch students.json:", response.status);
       return;

@@ -272,7 +272,7 @@ function handleSort(event) {
  */
 async function loadStudentsAndInitialize() {
   try {
-    const response = await fetch("students.json");
+    const response = await fetch("api/students.json");
     if (!response.ok) {
       console.error("Failed to load students.json");
       return;

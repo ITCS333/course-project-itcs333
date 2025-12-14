@@ -32,16 +32,30 @@
 // Allow specific headers (Content-Type, Authorization)
 session_start();
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Credentials: true");
+
+// Allow cross-origin requests (CORS) if needed
+// NOTE: If frontend and backend are on same domain, you can remove CORS headers.
+// For credentials (sessions) to work, Access-Control-Allow-Origin cannot be "*".
+$origin = $_SERVER["HTTP_ORIGIN"] ?? "";
+$allowedOrigins = [
+    "http://localhost",
+    "http://127.0.0.1",
+];
+
+if ($origin && in_array($origin, $allowedOrigins, true)) {
+    header("Access-Control-Allow-Origin: " . $origin);
+    header("Access-Control-Allow-Credentials: true");
+} else {
+    // If no origin (same-site request) or unknown origin, do not set Allow-Origin
+    // This prevents CORS misconfiguration causing blocked requests.
+}
+
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 
 // TODO: Handle preflight OPTIONS request
 // If the request method is OPTIONS, return 200 status and exit
-
-
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     http_response_code(200);
     exit;
@@ -54,7 +68,15 @@ require_once __DIR__ . "/connect.php";
 
 
 // TODO: Get the PDO database connection
-$db = getDBConnection();
+// Wrap connection in try/catch to avoid generic "Server Error" (HTTP 500) without JSON response
+try {
+    $db = getDBConnection();
+} catch (Throwable $e) {
+    sendResponse([
+        "success" => false,
+        "message" => "Database connection failed"
+    ], 500);
+}
 
 
 // TODO: Get the HTTP request method
